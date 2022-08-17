@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="wrap_content"
+  android:layout_height="match_parent">
+
+  <TextView
+    android:id="@+id/tv_desde_camara"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:text="Desde cámara"
+    android:padding="12dp"
+    android:background="@color/negro_claro"
+    android:textColor="@android:color/black" />
+
+  <TextView
+    android:id="@+id/tv_desde_archivo"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:text="Desde archivo"
+    android:padding="12dp"
+    android:background="@color/negro_claro"
+    android:textColor="@android:color/black" />
+
+</LinearLayout>

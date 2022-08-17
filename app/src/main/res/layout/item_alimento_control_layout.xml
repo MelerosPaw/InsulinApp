@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <variable
+      name="item"
+      type="julioverne.insulinapp.data.dao.ItemAEntrada" />
+
+    <import type="julioverne.insulinapp.ui.adaptadores.AdaptadorAlimentosControlBinding" />
+
+  </data>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="10dp">
+
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:orientation="vertical"
+      android:paddingRight="10dp">
+
+      <TextView
+        android:id="@+id/tv_nombre_alimento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@{item.alimento.nombre}"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/dejavu_extra_light"
+        tools:text="Patatas" />
+
+      <TextView
+        android:id="@+id/tv_unidad_medida"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@{item.alimento.unidadMedida}"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        app:fontFamily="@font/dejavu"
+        tools:text="Plato grande (300gr)" />
+
+    </LinearLayout>
+
+    <EditText
+      android:id="@+id/et_cantidad_alimento"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginRight="10dp"
+      android:layout_weight="0"
+      android:digits="1234567890,"
+      android:ems="4"
+      android:gravity="center_horizontal"
+      android:hint="0"
+      android:imeOptions="actionDone"
+      android:inputType="numberDecimal"
+      android:lines="1"
+      android:maxLength="6"
+      android:text="@{AdaptadorAlimentosControlBinding.getCantidad(item.cantidad)}"
+      android:textColor="@android:color/black"
+      android:textSize="18sp"
+      app:fontFamily="@font/dejavu_extra_light" />
+
+    <ImageButton
+      android:id="@+id/btn_eliminar"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="0"
+      android:background="@drawable/selector_simple"
+      android:padding="5dp"
+      android:src="@android:drawable/ic_delete" />
+
+  </LinearLayout>
+</layout>

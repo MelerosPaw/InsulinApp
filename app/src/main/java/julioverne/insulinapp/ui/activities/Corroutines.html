@@ -1,0 +1,767 @@
+<h2>¿Qué son y para qué se usan?</h2>
+
+<p><a href="https://developer.android.com/kotlin/coroutines">https://developer.android.com/kotlin/coroutines</a></p>
+
+<p>Es la forma recomendada por Android para ejecutar tareas en segundo plano que nos permite escribir el código de
+    manera síncrona aunque se vaya a ejecutar de forma asíncrona. Es decir, <em>grosso modo</em> es una manera de usar
+    hilos para hacer operaciones costosas sin tener que meter <em>callbacks</em> de por medio. Así que olvídate de Job
+    Manager, <code>AsyncTask</code> y de crear hilos y <em>handlers</em>.</p>
+
+<p>Un ejemplo:</p>
+
+<pre>GlobalScope.<span class="funcion-extension">launch</span> {
+  <span class="palabra-reservada">val</span> datos = getDatos() <span class="comentario">// Operación costosa</span>
+  <span class="campo-clase">liveData</span>.postValue(datos)
+}</pre>
+
+<p>Aunque no entiendas nada:</p>
+<ol>
+    <li><code class="funcion-extension">launch()</code> lanza una corrutina.</li>
+    <li>Dentro ejecutamos una operación costosa, que se ejecutará de cuando Android decida (asíncronamente).</li>
+    <li>Luego devolvemos el resultado a la vista mediante un <em>live data</em>.</li>
+</ol>
+<p>Sin la corrutina, habríamos tenido que entrar a segundo plano mediante algún mecanismo (<code>Thread</code>, <code>Handler</code>,
+    Retrofit) y si dentro de este segundo plano quisiéramos haber lanzado más tareas en segundo plano, comenzaríamos a
+    perdernos en un mar de <em>callbacks</em>. Sin <em>callbacks</em> estamos escribiendo el código como si fuera código
+    síncrono.</p>
+
+<h3>¿Entonces una corrutina es un hilo?</h3>
+<p>No. Lo primero que debes entender es que las corrutinas no son hilos. Una corrutina es solo una <strong>tarea
+    asíncrona</strong>: un trozo de código que se ejecutará en otro momento, y su ejecución puede llevarse a cualquier
+    hilo, ejecutarse, suspenderse y reanudarse, pero que no está ligado al hilo. Si se suspende, el hilo no se suspende,
+    solo la ejecución de ese código. La suspensión es la liberación del hilo de tener que ejecutar ese código, por lo
+    que puede seguir con otra cosa. Por lo tanto suspender una corrutina (cosa que verás más adelante), no significa
+    bloquear un hilo en ningún caso.</p>
+<p>Un ejemplo gráfico:</p>
+<ol>
+    <li>Imagina que los hilos de Android son cintas transportadoras.</li>
+    <li>El código síncrono son cosas que pones encima de la cinta y esta se lo lleva hacia adelante (lo ejecuta).</li>
+    <li>Pues en el caso de las corrutinas, Android toma el código de la corrutina (el que hay entre las llaves de <code>launch()</code>)
+        y lo mete en una caja.
+    </li>
+    <li>Android, que es un brazo mecánico, puede colocar esta caja en una cinta (para que se ejecute), pero también
+        puede levantar la caja (suspender la ejecución de ese código), y puede volver a depositarla en la misma cinta o
+        en otra diferente. Pero las cintas no se paran nunca, los hilos siguen llevando código.
+    </li>
+    <li>Cada corrutina es una caja y puedes crear muchas al mismo tiempo y Android decidirá si crea otras cintas para
+        esas cajas o si las pone en cintas ya existentes, pero el código no se ejecutará hasta que el brazo mecánico las
+        pone en una cinta.
+    </li>
+    <li>Las cajas son independientes de las cintas y solo se ejecutan cuando están sobre una de ellas, pero las cintas
+        siguen adelante llevándose cosas, independientemente de si tienen cajas sobre ellas o no.
+    </li>
+</ol>
+<p>Esto es una tarea asíncrona, un código que se puede suspender y reanudar, y que se ejecuta a criterio de Android
+    según lo considere más eficiente. Por eso las corrutinas son más livianas que los hilos, porque se ejecutan sobre
+    hilos, pero no es necesario crear uno por cada corrutina, sino que se van moviendo de uno a otro.</p>
+
+
+<!--region Dependencias-->
+<h2>Dependencias</h2>
+<p>Lo primero, mete esta dependencia en el <span class="nombre-archivo">build.gradle</span> de tu módulo
+    <code>app</code>:</p>
+
+<pre>dependencies {
+  implementation <span class="dependencia">"org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0"</span>
+}</pre>
+
+<p>Busca la versión en <a href="https://developer.android.com/kotlin/coroutines">https://developer.android.com/kotlin/coroutines</a>
+    o en <a href="https://github.com/Kotlin/kotlinx.coroutines">https://github.com/Kotlin/kotlinx.coroutines</a>.</p>
+
+<p>Añade también la dependencia de las extensiones de corrutinas para poder llamarlas desde los <i>view models</i>, que
+    es donde está lo importante para Android:</p>
+
+<pre>implementation <span class="dependencia">"androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"</span></pre>
+
+<p>Busca la versión en <a href="https://developer.android.com/kotlin/ktx#viewmodel">https://developer.android.com/kotlin/ktx#viewmodel</a>.
+</p>
+
+<p>Opcionalmente, añade la dependencia para lanzar corrutinas desde una clase con ciclo de vida:</p>
+
+<pre>implementation <span class="dependencia">"androidx.lifecycle:lifecycle-runtime-ktx:2.4.0"</span></pre>
+
+<p>Busca la versión en <a href="https://developer.android.com/kotlin/ktx#lifecycle">https://developer.android.com/kotlin/ktx#lifecycle</a>.
+</p>
+
+<!--endregion-->
+
+<!--region A lanzar-->
+<h2>¡A lanzar una corrutina!</h2>
+
+<p><b>TL; DR</b></p>
+<ul>
+    <li>Las corrutinas se lanzan con una función constructora de corrutinas, también llamada constructor de corrutinas o
+        <i>coroutine builder</i> (<code>launch()</code>, <code>async()</code> o <code>runBlocking()</code>).
+    </li>
+    <li><code>launch()</code> y <code>async()</code> los <i>coroutine builders</i> son fuciones de extensión de un
+        <code>CoroutineScope</code>.
+    </li>
+    <li>Hay tres <i>scopes</i>: <code>GlobalScope</code>, <code class="propiedad-extension">viewModelScope</code> y
+        <code class="propiedad-extension">lifecycleScope</code>.
+    </li>
+    <li>El constructor de corrutinas recibe un <code>CoroutineContext</code>, que es quien determina qué hilo se usará
+        para ejecutar la corrutina.
+    </li>
+    <li>Si no se especifica el <code>CoroutineContext</code>, se usa el que tenga por defecto el <i>scope</i>.</li>
+    <li>Las corrutinas viven mientras viva el <i>scope</i> que las lanzó. <code>GlobalScope</code> vive durante toda la
+        aplicación, <code class="propiedad-extension>">viewModelScope</code> durante la vida del <code>ViewModel</code>,
+        y <code class="propiedad-extension">lifecycleScope</code> durante la vida de su vista.
+    </li>
+</ul>
+
+<p>Aunque ahora no lo entiendas, esta es la estructura de una corrutina:</p>
+<pre>CoroutineScope.<span class="funcion-extension">coroutineBuilder</span>(CoroutineContext) {
+  <span class="comentario">// Código de la corrutina</span>
+}</pre>
+
+<p>Tenla presente y vuelve a ella para verificar que lo vas entendiendo conforme vas avanzando.</p>
+
+<!--endregion-->
+
+<!--region CoroutineScope-->
+<h3>El CoroutineScope</h3>
+<p>Para lanzar una corrutina necesitamos usar un <code>CoroutineScope</code> (ámbito de corrutina). Solo los
+    <i>scopes</i> pueden lanzar corrutinas. En Android conocemos:</p>
+<ul>
+    <li>El <code>GlobalScope</code>, que es accesible desde cualquier clase.</li>
+    <li>El <code class="propiedad-extension">viewModelScope</code>, que es una propiedad de los <i>view models</i>.</li>
+    <li>El <code class="propiedad-extension">lifecycleScope</code>, que está disponible en las <i>activities</i> y <i>fragments</i>.
+        Puedes acceder a él también mediante <code>lifecycle.coroutineContext</code>.
+    </li>
+</ul>
+<p>También puedes crear uno tú mismo instanciando un objeto <code>CoroutineScope</code>, pero no vas a necesitar hacerlo
+    nunca porque te basta con los otros dos y menos.</p>
+<p>El <i>scope</i> determina la vida de las corrutinas que se lancen con este. Mientras un <i>scope</i> esté vivo, sus
+    corrutinas seguirán ejecutándose. Cuando el <i>scope</i> se muera, las corrutinas lanzadas con este se cancelarán
+    automáticamente. Más sobre este tema en <a
+            href="https://developerypunto.blogspot.com/2022/02/concurrencia-estructurada.html">Concurrencia
+        estructurada</a>. Así pues:</p>
+
+<ul>
+    <li><code>GlobalScope</code> dura mientras se esté ejecutando la aplicación, es decir, mientras no la mate el
+        sistema o la mates tú mismo desde aplicaciones recientes, las corrutinas lanzadas con este seguirán
+        ejecutándose.
+    </li>
+    <li><code class="propiedad-extension">viewModelScope</code> dura mientras esté vivo el <i>view model</i> al que
+        pertenece. Cuando se ejecute el <code>onCleared()</code> del <code>ViewModel</code>, su <code
+                class="propiedad-extension">viewModelScope</code> se destruirá, y con él, sus corrutinas.
+    </li>
+    <li><code class="propiedad-extension">lifecycleScope</code> dura mientras dure el <code>lifecycle</code> de la
+        vista.
+    </li>
+    <li>Si lo creas tú con <code><em>CoroutineScope</em>()</code>, tendrás que gestionar tú cuándo se muere según cuánto
+        te interesa que vivan tus corrutinas.
+    </li>
+</ul>
+<!--endregion-->
+
+<!--region Constructor de corrutinas-->
+<h3>El <em>coroutine builder</em></h3>
+<p>Para iniciar una corrutina tenemos que llamar una función constructora de corrutinas (<i>coroutine builder</i>)
+    disponible en el <i>scope</i>. Los constructores de corrutinas son unas funciones de extensión de los <i>scopes</i>
+    que inician corrutinas. Son <code>launch()</code> y <code>async()</code>.</p>
+<p>También funciones de suspensión constructoras de corrutinas, que son <code>coroutineScope()</code> y <code>supervisorScope()</code>,
+    y un caso especial llamado <code>runBlocking()</code>, pero todos estos los veremos en otro momento).</p>
+<p>Cada uno se usa para un propósito distinto que veremos luego. De momento para explicar las corrutinas nos bastamos
+    solo con <code>launch()</code>.</p>
+
+<p>Así pues, una corrutina se ejecuta así:</p>
+<pre>GlobalScope.<span class="funcion-extension">launch</span> {
+  <span class="comentario">// Hacer algo costoso.</span>
+}</pre>
+
+<p>O si estás en un <i>view model</i>:</p>
+<pre><span class="propiedad-extension">viewModelScope</span>.<span class="funcion-extension">launch</span> {
+  <span class="comentario">// Hacer algo costoso.</span>
+}</pre>
+
+<p>O si estás en una vista:</p>
+<pre><span class="propiedad-extension">lifecycleScope</span>.<span class="funcion-extension">launch</span> {
+  <span class="comentario">// Hacer algo costoso.</span>
+}</pre>
+
+<p>O si lo creas tú, así:</p>
+<pre><i>CoroutineScope</i>(Dispatchers.<span class="campo-clase">IO</span>).<span
+        class="funcion-extension">launch</span> {
+  <span class="comentario">// Hacer algo costoso.</span>
+}</pre>
+
+<p>(Luego explicaremos qué es <code>Dispatchers.<span class="campo-clase">IO</span></code>).</p>
+
+<p>En estos ejemplos <code class="funcion-extension">launch()</code> no lleva paréntesis porque todos sus parámetros son
+    opcionales, y el último de ellos es una lambda, que es el código que queremos ejecutar en la corrutina. Por eso
+    Kotlin nos permite omitir los paréntesis.</p>
+
+<p>Dentro de la corrutina estarás en un hilo, por lo que debes tener en cuenta que:</p>
+
+<ul>
+    <li>Solo puedes acceder a las vistas si estás en el hilo principal.</li>
+    <li>Solo debes hacer operaciones costosas cuando estés en un hilo secundario.</li>
+</ul>
+
+<p>Lo que nos lleva a la siguiente pregunta: ¿dónde se ejecuta una corrutina? </p>
+
+<!--endregion-->
+
+<!--region Contexto de corrrutinas-->
+<h3>El CoroutineContext</h3>
+
+<p>Una corrutina NO se ejecuta en el hilo en el que la lanzas ni tampoco se ejecuta directamente en un hilo secundario.
+    Se ejecuta en los hilos indicados por el contexto de corrutina (<code>CoroutineContext</code>) que usemos. <b>"""En
+        principio"""</b>, un contexto nos permite indicar el <b>tipo de hilo</b> que queremos usar, pero no qué hilo
+    concreto.</p>
+
+<p>¿Por qué no podemos indicar el hilo concreto? Porque ese es el papel de Android. Android es quien gestiona los hilos
+    en los que se ejecutan las corrutinas porque así puede crearlos y reutilizarlos para ser más eficiente. Y
+    verdaderamente a ti tampoco te interesa decirle qué hilo concreto ha de utilizar; a ti lo que te interesa es decirle
+    si quieres que use el hilo pricipal o que use uno secundario.</p>
+
+<p>Igual que no vamos a crear un <code>CoroutineScope</code> prácticamente nunca, tampoco vamos a crear un objeto <code>CoroutineContext</code>,
+    sino que utilizaremos uno de sus subtipos llamado "<i>dispatcher</i>".</p>
+
+<h4>Tipos de <i>dispatcher</i></h4>
+<p>Existen estos cuatro <i>dispatchers</i> y cada uno usa cierto <b>tipo de hilos</b>. En tu trabajo querrás ejecutar
+    una corrutina en segundo plano y, en ocasiones volver al hilo principal para hacer cambios. Esto lo haremos usando
+    un <i>dispatcher</i> u otro como veremos más adelante.</p>
+<ul>
+    <li><code>Dispatchers.<span class="campo-clase">Main</span></code>: ejecuta el código en el hilo principal (para
+        cuando haya que hacer operaciones con las vistas desde dentro de una corrutina).
+    </li>
+    <li><code>Dispatchers.<span class="campo-clase">Default</span></code>: ejecuta el código en un hilo secundario para
+        operaciones de uso intensivo de CPU, como cálculos en bucles (filtrados y mapeos).
+    </li>
+    <li><code>Dispatchers.<span class="campo-clase">IO</span></code>: ejecuta el código en un hilo secundario destinado
+        a hacer operaciones de entrada y salida de datos (I/O), como llamar a WS, manipular archivos o consultar la base
+        de datos.
+    </li>
+    <li><code>Dispatchers.<span class="campo-clase">Unconfined</span></code>: (conforme lo leas, lo puedes olvidar,
+        porque no lo vas a utilizar nunca, pero lo explicaremos en <a
+                href="https://developerypunto.blogspot.com/2022/02/unconfined.html">Unconfined</a>) ejecuta el código en
+        el hilo en el que es lanzado, pero va cambiando de contexto adquiriendo el de cada función <code>suspend</code>
+        que se vaya llamando.
+    </li>
+</ul>
+
+<p>Fíjate en que, ninguno de los <i>dispatchers</i> the permite indicar el hilo que quieres usar (salvo el <code>Dispatchers.<span
+        style="color: #aa7e68;">Main</span></code>, pero porque hilo principal solo hay uno).</p>
+
+<!--endregion-->
+
+<!--region Quiero indicar los hilos-->
+<h5>Quiero indicar los hilos yo</h5>
+<p>Si eres cabezota o tienes necesidad de gestionar los hilos de forma diferente a como lo hace Android (cosa altamente
+    improbable), debes saber que existen las siguientes funciones: </p>
+<ul>
+    <li><code>newSingleThreadContext(<span class="texto">"Mi hilo"</span>)</code>: que crea un
+        <code>CoroutineContext</code> en el que se creará y utilizará un hilo llamado "Mi hilo".
+    </li>
+    <li><code>newFixedThreadPoolContext(<span class="cifra">3</span>, <span class="texto">"Mi hilo"</span>)</code>: que
+        crea un <code>CoroutineContext</code> en que se utilizará un <code>ThreadPool</code> con la cantidad de hilos y
+        el nombre base de los hilos que indiques. Es decir, en este ejemplo las corrutinas se ejecutarán en los hilos
+        "Mi hilo-1", "Mi hilo-2" y "Mi hilo-3" y los gestionará Android.
+    </li>
+</ul>
+<!--endregion-->
+
+<!--region Qué dispatcher se está usando-->
+<h4>¿Qué <i>dispatcher</i> se está usando?</h4>
+
+<p>El contexto de corrutina es una propiedad de un <code>CoroutineScope</code>, y cada <i>scope</i> tiene un contexto
+    por defecto. Por ello <b>se usará el contexto que tenga por defecto el <i>scope</i> que utilicemos.</b> El contexto
+    de <code>GlobalScope</code> utiliza <code>Dispatchers.<span class="campo-clase">Default</span></code>, el de <code
+            class="propiedad-extension">viewModelScope</code> y <code class="propiedad-extension">lifecycleScope</code>,
+    <code>Dispatchers.<span class="campo-clase">Main</span></code>, y si el <i>scope</i> lo creas tú, tienes que
+    pasárselo en el constructor.</p>
+<p>Por ejemplo:</p>
+
+<pre>GlobalScope.<span class="funcion-extension">launch</span> {
+  <span class="comentario">// GlobalScope usa Dispatchers.Default por defecto</span>
+}
+
+<span class="propiedad-extension">viewModelScope</span>.<span class="funcion-extension">launch</span> {
+  <span class="comentario">// viewModelScope usa Dispatchers.Main por defecto</span>
+}
+
+<i>CoroutineScope</i>(Dispatchers.<span class="campo-clase">Main</span>).<span class="funcion-extension">launch</span> {
+  <span class="comentario">// Aquí estamos creando un scope y le estamos indicando que
+  // su contexto por defecto es Dispatchers.Main</span>
+}</pre>
+
+<p>No obstante, los constructores de corrutinas <code class="funcion-extension">launch()</code> y <code
+        class="funcion-extension">async()</code> pueden recibir un <code>CoroutineContext</code> como primer parámetro y
+    este <b>sobrescribirá al del <i>scope</i></b>. Ejemplo:</p>
+
+<pre><span class="propiedad-extension">viewModelScope</span>.<span
+        class="funcion-extension">launch</span>(Dispatchers.<span class="campo-clase">IO</span>) {
+  <span class="comentario">// Aquí se usa Dispatchers.IO porque, aunque viewModelScope
+  // usa Dispatchers.Main por defecto, lo estamos sobrescribiendo
+  // con el parámetro de launch()</span>
+}
+
+<i>CoroutineScope</i>(Dispatchers.<span class="campo-clase">IO</span>).launch(Dispatchers.<span
+            class="campo-clase">Main</span>) {
+  <span class="comentario">// Aquí hemos creado un scope con el dispatcher IO por defecto,
+  // pero launch lo está sobrescribiendo con Dispatchers.Main.
+  // Es un caso estúpido solo para ilustrarlo.</span>
+}</pre>
+
+<p>Un <i>dispatcher</i> es un <code>CoroutineContext</code> en esencia (ya entenderás cómo funciona esto en <a
+        href="https://developerypunto.blogspot.com/2022/02/que-es-realmente-un-contexto-de.html">¿Qué es realmente un
+    contexto de corrutinas?</a>), por lo que podemos usarlo como primer parámetro del constructor de corrutinas. Así que
+    ya tenemos la forma de determinar el hilo en el que queremos que se ejecuten nuestras corrutinas.</p>
+
+<p>Para saber en qué hilo se está ejecutando algo, vamos a crear y a llamar a esta función dentro de la corrutina:</p>
+
+<pre><span class="palabra-reservada">fun</span> <span class="metodo">printThreadName</span>(name: String) {
+    Log.<span class="estatico">i</span>(<span class="texto">"INFO"</span>, <span class="texto">"<span
+            class="simbolo">$</span></span>name<span class="texto"> se está ejecutando en <span
+            class="simbolo">${</span></span>Thread.<span class="estatico">currentThread</span>().<span
+            class="campo-clase">name</span><span class="simbolo">}</span><span class="texto">"</span>)
+}</pre>
+
+<p>Así pues:</p>
+<pre>GlobalScope.<span class="funcion-extension">launch</span> {
+  <span class="comentario">// Sin indicar dispatcher, se usa el del GlobalScope.
+  // Aquí dentro estamos en un hilo secundario.</span>
+  printThreadName(<span class="texto">"launch sin dispatcher"</span>)
+}
+
+GlobalScope.<span class="funcion-extension">launch</span>(Dispatchers.<span class="campo-clase">Default</span>) {
+  <span class="comentario">// Aquí estamos en un hilo secundario.</span>
+  printThreadName(<span class="texto">"launch con Dispatchers.Default"</span>)
+}
+
+GlobalScope.<span class="funcion-extension">launch</span>(Dispatchers.<span class="campo-clase">Main</span>) {
+  <span class="comentario">// Aquí estámos en el hilo principal.</span>
+  printThreadName(<span class="texto">"launch con Dispatchers.Main"</span>)
+}
+
+GlobalScope.<span class="funcion-extension">launch</span>(Dispatchers.<span class="campo-clase">IO</span>) {
+  <span class="comentario">// Aquí estámos en un hilo secundario.</span>
+  printThreadName(<span class="texto">"launch con Dispatchers.IO"</span>)
+}
+
+GlobalScope.<span class="funcion-extension">launch</span>(Dispatchers.<span class="campo-clase">Unconfined</span>) {
+  <span class="comentario">// Olvida esto.
+  // Aquí estámos en un hilo secundario porque empieza con el dispatcher por defecto.</span>
+  printThreadName(<span class="texto">"launch con Dispatchers.Unconfined"</span>)
+}
+
+GlobalScope.<span class="funcion-extension">launch</span>(<i>newSingleThreadContext</i>(<span
+            class="texto">"Mi hilo"</span>)) {
+  <span class="comentario">// Aquí estamos en un hilo secundario llamado "Mi hilo".</span>
+  printThreadName(<span class="texto">"""launch que lanza "Mi hilo""""</span>)
+}
+
+CoroutineScope(Dispatchers.<span class="campo-clase">Main</span>).<span class="funcion-extension">launch</span>(Dispatchers.<span
+            class="campo-clase">Default</span>) {
+  <span class="comentario">// Aquí estamos en un hilo secundario porque el dispatcher
+  // de launch sobrescribe al del scope</span>
+  printThreadName(<span class="texto">"launch desde un scope propio"</span>)
+}</pre>
+
+<p>Este es el resultado (uno de los posibles al menos):</p>
+
+<pre>launch con Dispatchers.IO se está ejecutando en DefaultDispatcher-Worker-1
+launch con Dispatchers.Default se está ejecutando en DefaultDispatcher-Worker-2
+launch que lanza "Mi hilo" se está ejecutando en Mi hilo
+launch con Dispatchers.Main se está ejecutando en main
+launch sin dispatcher se está ejecutando en DefaultDispatcher-Worker-1
+launch desde un scope propio se está ejecutando en DefaultDispatcher-Worker-2
+launch con Dispatchers.Unconfined se está ejecutando en main</pre>
+
+<p>¿Por qué sale desordenado el resultado? Pues porque Android:</p>
+<ul>
+    <li>Decide cuándo va a ejecutar las corrutinas (asincronía), por lo que no necesariamente va a ejecutarlas en el
+        mismo orden en el que las lanzas
+    </li>
+    <li>Decide en qué hilo las va a lanzar (pudiendo decidir si crea o reutiliza un hilo ya existente), y los hilos son
+        concurrentes entre sí (suceden a la vez), por lo que muy probablemente varias corrutinas lanzadas al mismo
+        tiempo se ejecuten en paralelo.
+    </li>
+</ul>
+<p>Más sobre esto en <a href="https://developerypunto.blogspot.com/2022/02/gestion-de-la-ejecucion-de-las.html">Gestión
+    de la ejecución de las corrutinas</a>.</p>
+
+<p>En el resultado, puedes ver que se han utilizado:</p>
+<ul>
+    <li>Dos hilos secundarios (llamados "DefaultDispatcher-Worker-1" y 2).</li>
+    <li>El hilo principal, que se llama "<i>main</i>".</li>
+    <li>El que hemos creado, que se llama "Mi hilo".</li>
+</ul>
+<p>Recuerda que solo debemos indicar <b>en qué tipo de hilo se ejecuta</b> el código y no qué hilo concreto se va a
+    usar, para que Android pueda usarlos de manera óptima. Por este motivo, vemos que ha decidido reutilizar los dos
+    hilos secundarios que ha creado, pero que el que hemos especificado solo lo puede utilizar para lo que le hemos
+    dicho.</p>
+
+
+<h2>¿Cómo voy a usar las corrutinas en mi aplicación?</h2>
+<p><b>TL; DR</b></p>
+<ul>
+    <li>Evita a toda costa usar <code>GlobalScope</code>, no te compliques la vida creando <em>scopes</em> tú mismo y
+        hazte un favor y ejecútalo todo con <code><span class="propiedad-extension">viewModelScope</span>.<span
+                class="funcion-extension">launch</span>()</code>.
+    </li>
+    <li>Si tienes que volver al hilo principal, usa un <code>LiveData</code>.</li>
+</ul>
+<br/>
+
+<p>En Android tendrás casi el 100% de las veces uno de estos dos escenarios:</p>
+<ul>
+    <li><strong>Solo petición:</strong> quieres ejecutar un código y no hay nada que hacer después, no importa si falla,
+        si no falla... Quiero lanzarlo y olvidarme.
+    </li>
+    <li><strong>Petición y respuesta:</strong> quieres solicitar datos y pintarlos cuando lleguen, o ejecutar algo y
+        hacer un cambio en la UI cuando termine.
+    </li>
+</ul>
+<p>Para ninguno de estos casos te interesa usar <code class="funcion-extension">lifecycleScope</code>, ya que tus
+    peticiones no deberían verse afectadas por los cambios de configuración de la <em>activity</em>. Si declaras las
+    peticiones en el <code class="metodo">onCreate()</code>, se estarían destruyendo y lanzando una y otra vez cada vez
+    que girases la pantalla. Así que no quieres usar ese ámbito. Este problema lo solucionas con <code
+            class="funcion-extension">viewModelScope</code>.</p>
+
+<h3>Solo petición</h3>
+
+<p>Si solo tienes que ejecutar un código y olvidarte, usa <code class="propiedad-extension">viewModelScope</code> con
+    <code>Dispatchers.<span class="campo-clase">IO</span></code>. Esto ejecutará el código en un hilo secundario:</p>
+
+<pre><span class="palabra-reservada">fun</span> <span class="metodo">sendMessage</span>(message: String) {
+    <span class="propiedad-extension">viewModelScope</span>.<span
+            class="funcion-extension">launch</span>(Dispatchers.<span class="campo-clase">IO</span>) {
+      <span class="comentario">// Aquí estamos en un hilo secundario, así que hacemos el trabajo</span>
+      <span class="campo-clase">repository</span>.sendMessage(message)
+    }
+}</pre>
+
+<p>Este método envía un mensaje y no necesita hacer nada después. Si el mensaje se envía o no, no nos importa. Por ello,
+    no hacemos nada después de llamar.</p>
+
+<h3>Petición y respuesta</h3>
+
+<p>Sin embargo, si lo que necesitas es obtener datos y pintar algo en pantalla, tienes que obtenerlos en segundo plano y
+    luego cambiar de contexto para volver al hilo principal y pintarlos.</p>
+<p>LO MÁS SEGURO SIEMPRE es lanzar corrutinas con el <code class="propiedad-extension">viewModelScope</code> y volver
+    con un <em>live data</em> y olvidarte de paparruchas. Hasta ahora, para salir del segundo plano se utilizaba un
+    <code>Handler</code> (como indicaba <a
+            href="https://developer.android.com/reference/android/view/View.html#event-handling-and-threading">Android</a>
+    en su momento, pero gracias al <code>LiveData</code>, ya no hace falta).</p>
+<p>Así que, igual que antes, usa <code>Dispatchers.<span class="campo-clase">IO</span></code>, para llevar la ejecución
+    a un hilo secundario, y cuando termines llama al método <code>postValue()</code> de <code>LiveData</code>, que es
+    quien se encarga de informar del valor en primer plano:</p>
+<pre><span class="palabra-reservada">fun</span> <span class="metodo">requestBooks</span>() {
+    <span class="propiedad-extension">viewModelScope</span>.<span
+            class="funcion-extension">launch</span>(Dispatcher.<span class="campo-clase">IO</span>) {
+      <span class="palabra-reservada">val</span> libros = getLibros()
+      <span class="campo-clase">liveData</span>.postValue(libros)
+    }
+}</pre>
+
+<p>Es tan simple como esto, pero puedes decidir (o necesitar) complicarte la vida cambiando de contexto.</p>
+
+
+<h2>Funciones de suspensión</h2>
+<p><b>TL; DR</b></p>
+<ul>
+    <li>Suspender significa pausar la ejecución del código de la corrutina, en ningún caso significa detener un hilo.
+    </li>
+    <li>Una función de suspensión suspende la corrutina en la que es llamada y la reanuda cuando termine.</li>
+    <li>Esto se hace a nuestras espaldas mediante un <em>callback</em> llamado <code>Continuation</code>. La <em>continuation</em>
+        encapsula todo el código que se ha escrito después de la función de suspensión y se le pasa a esta para ser
+        llamado cuando termine.
+    </li>
+    <li>Una función de suspensión se declara con el modificador <code class="palabra-reservada">suspend</code>.</li>
+    <li>Querremos suspender una corrutina únicamente cuando queramos cambiar de contexto (es decir, cambiar de hilo). Si
+        no cambiamos de contexto, la suspensión es absurda porque un mismo hilo ya es síncrono, por lo que siempre la
+        siguiente línea va a esperar a la anterior.
+    </li>
+    <li>Una función de suspensión debe garantizar la seguridad del hilo principal, cambiando de contexto para ejecutar
+        las operaciones costosas.
+    </li>
+</ul>
+<p><br/></p>
+
+<p>Una función de suspensión se crea poniendo <code class="palabra-reservada">suspend fun</code> en lugar de solo <code
+        class="palabra-reservada">fun</code> y solo se pueden llamar desde dentro de una corrutina o desde dentro de
+    otra función de suspensión. Tiene dos finalidades:</p>
+
+<ul>
+    <li>Suspender la corrutina en la que se han llamado.</li>
+    <li>Permitir llamar a otras funciones de suspensión.</li>
+</ul>
+
+<p>Ni más ni menos. Pero, y esto ¿qué significa?</p>
+
+<p>Pues verás. Primero te voy a explicar cómo funciona la suspensión y luego te contaré cuál es su utilidad y cuándo la
+    deberíamos usar.</p>
+
+<h3>¿Qué es suspender?</h3>
+
+<p>Una función de suspensión pospone la ejecución del código de una corrutina hasta que no termine un código anterior.
+    Mira este ejemplo:</p>
+
+<pre><span class="comentario">suspend</span> <span class="palabra-reservada">fun</span> <span class="metodo">buscarNumero</span>(nombre: String): String {
+    <span class="palabra-reservada">return</span> getContactos().getNumero(nombre)
+}
+
+<span class="palabra-reservada">fun</span> <span class="metodo">llamarAMama</span>() {
+    <span class="propiedad-extension">viewModelScope</span>.<span class="funcion-extension">launch</span> {
+        <span class="palabra-reservada">val</span> numero = buscarNumero(<span class="texto">"Mamá"</span>)
+        <span class="campo-clase">marcarNumeroLiveData</span> = numero
+    }
+}</pre>
+
+<p>Una función de suspensión solo se puede usar dentro de una corrutina y lo que hace es encapsular todo el código que
+    viene después de su llamada y hacer que se llame cuando termine. Es decir, tendríamos esto:</p>
+
+<pre><span class="palabra-reservada">fun</span> <span class="metodo">llamarAMama</span>() {
+    <span class="propiedad-extension">viewModelScope</span>.<span class="funcion-extension">launch</span> {
+        buscarNumero(<span class="texto">"Mamá"</span>, ::marcar)
+    }
+}
+
+<span class="palabra-reservada">fun</span> <span class="metodo">buscarNumero</span>(nombre: String, cuandoTermine: (String) -> Unit) {
+    <span class="palabra-reservada">val</span> numero = getContactos().getNumero(nombre)
+    cuandoTermine(numero)
+}
+
+<span class="palabra-reservada">fun</span> <span class="metodo">marcar</span>(numero: String) {
+    <span class="campo-clase">marcarNumeroLiveData</span> = numero
+}</pre>
+
+<p>En otras palabras, se ha suspendido el código que había en la corrutina. La función de suspensión no ejecuta las
+    líneas posteriores a esta hasta que no termina. Esto es la suspensión en esencia: meter un <em>callback</em>
+    implícito para forzar que algo no ocurra hasta que no finalice el método.</p>
+<p>En el código compilado, <code class="palabra-reservada">suspend</code> se convierte en justamente esto que hemos
+    visto: un <em>callback</em> que se llama después. Este <em>callback</em> se llama <code>Continuation</code> y es
+    tipado y tiene estados y hace más cosas que no necesitamos conocer.</p>
+<p>Y te parecerá absurdo, ¿verdad? El código de una corrutina se ejecuta dentro de un hilo (en este caso el principal)
+    —y dentro de un mismo hilo, la ejecución es síncrona—, por lo tanto ese código ya era síncrono. Tanto si le poníamos
+    <code class="palabra-reservada">suspend</code> como si no, hasta que no se ejecutase el método <code class="metodo">buscarNumero()</code>,
+    no se iba a llamar a la siguiente línea, ¿no?</p>
+<p>Pues sí, en efecto, este ejemplo es absurdo, porque el código síncrono ya tiene esa propiedad, pero ayuda a ilustrar
+    la suspensión.</p>
+
+<h3>¿Para qué sirve la suspensión?</h3>
+
+<p>Entonces, si con suspender no hemos ganado nada (incluso el IDE te está marcando la palabra <code
+        class="palabra-reservada">suspend</code> en gris como que la suspensión no está siendo usada para nada), ¿cuando
+    y para qué quiero suspender? Pues cuando tengamos que esperar a que termine un cálculo que sucede en otro hilo para
+    obtener su resultado y usarlo en el hilo en el que estabas.</p>
+<p>A ver, por ponernos técnicos, se dice que una corrutina está <strong>confinada a un hilo</strong> —o un contexto—
+    porque toda la corrutina sucede en él. Así:</p>
+
+<pre><span class="palabra-reservada">fun</span> <span class="metodo">llamarAMama</span>() {
+    <span class="propiedad-extension">viewModelScope</span>.<span class="funcion-extension">launch</span> {
+        <span class="comentario">// Estas dos líneas suceden en el hilo principal porque viewModelScope usa Dispatchers.Main por defecto</span>
+        <span class="palabra-reservada">val</span> numero = buscarNumero(<span class="texto">"Mamá"</span>)
+        <span class="campo-clase">marcarNumeroLiveData</span> = numero
+    }
+}
+
+<span class="comentario">suspend</span> <span class="palabra-reservada">fun</span> <span
+            class="metodo">buscarNumero</span>(nombre: String): String {
+    <span class="comentario">// Esto también sucede en el hilo principal, porque ha sido llamado desde ahí y nadie ha cambiado de contexto</span>
+    <span class="palabra-reservada">return</span> getContactos().getNumero(nombre)
+}</pre>
+
+<p>Imagina que la función <code><span class="metodo">buscarNumero</span>()</code> fuese bloqueante, pero que igualmente
+    quisiéramos lanzar la corrutina en el hilo principal. Tendríamos que sacar la llamada a <code><span class="metodo">buscarNumero</span>()</code>
+    fuera del hilo principal. ¿Cómo haríamos este cambio de contexto? ¿Con otra corrutina? Sí y no. Imagino que estarías
+    pensando en algo como esto:</p>
+<pre><span class="palabra-reservada">fun</span> <span class="metodo">llamarAMama</span>() {
+    <span class="propiedad-extension">viewModelScope</span>.<span class="funcion-extension">launch</span> {
+        <span class="palabra-reservada">val</span> numero = buscarNumero(<span class="texto">"Mamá"</span>)
+        <span class="campo-clase">marcarNumeroLiveData</span> = numero
+}
+
+<span class="palabra-reservada">suspend fun</span> <span class="metodo">buscarNumero</span>(nombre: String): String {
+    <span class="palabra-reservada">return</span> <span class="funcion-extension">launch</span>(Dispatchers.<span
+            class="campo-clase">Default</span>) {
+        getContactos().getNumero(nombre)
+    }
+}</pre>
+
+<p>Lanzar otra corrutina <strong>tú mismo</strong> no funciona porque:</p>
+<ul>
+    <li>Recuerda que <code class="funcion-extension">launch()</code> es una función de extensión de
+        <code>CoroutineScope</code> y aquí no lo tenemos, así que no podemos llamarlo.
+    </li>
+    <li>Aunque hubiéramos declarado <code class="metodo">buscarNumero()</code> como <code><span
+            class="palabra-reservada">fun</span> CoroutineScope.<span class="metodo">buscarNumero()</span></code>, el
+        método <code class="funcion-extension">launch()</code> no puede devolver el resultado de lo que hay dentro
+        (<code class="funcion-extension">async()</code> nos vale, pero este no es su propósito, así que lo explicaremos
+        en <a href="https://developerypunto.blogspot.com/2022/02/async.html">async()</a>).
+    </li>
+    <li>Aunque consiguieras sacar el resultado, nunca estaría calculado a tiempo. <code class="funcion-extension">launch()</code>
+        se va a ejecutar de forma asíncrona, por lo que el método <code class="metodo">buscarNumero()</code> se acaba y
+        <code class="palabra-reservada">suspend</code> reanuda el código de la corrutina anterior, y al intentar acceder
+        a <code>numero</code>, esta variable aún no ha sido calculada.
+    </li>
+    <li>Si metes el código restante (la llamada al <em>live data</em>) dentro del segundo <code
+            class="funcion-extension">launch()</code> para que tenga acceso a <code>numero</code>, entonces ¿para que
+        sirve el primer <code class="funcion-extension">launch()</code>? Te lo podrías ahorrar.
+    </li>
+</ul>
+
+<p>¿Cómo cambiamos entonces de contexto? Con una función de suspensión propia del <em>framework</em> de corrutinas
+    llamada <code>withContext()</code>.</p>
+
+<h3>withContext()</h3>
+
+<p>Si miras su firma, verás que esta es una función de suspensión porque lleva la palabra reservada <code
+        class="palabra-reservada">suspend</code>, por lo que al usarla, se suspenderá la corrutina en la que es llamada.
+    Así que esa parte de la ecuación está despejada. Ahora queda la parte de cambiar de contexto. </p>
+<p>La magia de esta función está en que nos permite indicar un contexto con el cual creará una corrutina (sin decirnos
+    nada) y hará que la corrutina principal permanezca suspendida hasta que termine esta. ¿Cómo lo hace? No nos importa
+    (y si te importa, en resumen, gracias a <code class="palabra-reservada">suspend</code>, le pasa el objeto <code>Continuation</code>
+    que mencionamos antes a la nueva corrutina para que lo llame cuando termine).</p>
+<p>Vamos a ver esto en más profundidad.</p>
+
+<pre><span class="palabra-reservada">fun</span> <span class="metodo">llamarAMama</span>() {
+    <span class="propiedad-extension">viewModelScope</span>.<span class="funcion-extension">launch</span> {
+        <span class="comentario">// Aquí estamos en el hilo principal</span>
+
+        <span class="palabra-reservada">val</span> numero = withContext(Dispatchers.<span
+            class="campo-clase">Default</span>) {
+            <span class="comentario">// Aquí estamos en un hilo secundario</span>
+            getContactos().getNumero(<span class="texto">"Mamá"</span>)
+        }
+
+        <span class="comentario">// Aquí volvemos a estar en el hilo principal, pero solo cuando termine withContext()</span>
+        <span class="campo-clase">marcarNumeroLiveData</span> = numero
+}</pre>
+
+<p><code>withContext()</code> ejecuta una lambda (que es una corrutina, pero no se lo digas a nadie) y devuelve el
+    resultado de la última línea (igual que las funciones de ámbito (<code>let()</code>, <code>run()</code> o <code>apply()</code>)).
+    De esta forma, la obtención del número de mamá está sucediendo en otro hilo, pero el resultado es devuelto al mismo
+    contexto en el que se llamó el <code>withContext()</code>, porque es el hilo en el que está confinada la corrutina.
+    Así hemos movido la ejecución del código costoso a otro contexto que usa un hilo secundario. </p>
+
+<p>Si quieres que lo explique más lentamente:</p>
+
+<ol>
+    <li>Cuando comience la ejecución del <code class="funcion-extension">launch()</code> estaremos en el hilo principal.
+    </li>
+    <li>Al llamar a <code>withContext()</code> se suspende la ejecución del <code
+            class="funcion-extension">launch()</code> (la ejecución del código dentro de <code
+            class="funcion-extension">launch()</code>, no del hilo principal, ¡eh!) y se ejecuta <code>getContactos().getNumero()</code>
+        en un hilo secundario.
+    </li>
+    <li>El resultado es devuelto al hilo principal y entonces la corrutina de <code
+            class="funcion-extension">launch()</code> se reanuda.
+    </li>
+    <li>El <em>live data</em> no tiene que usar <code>postValue()</code> porque está en el hilo principal.</li>
+</ol>
+
+<p><strong>Recuerda:</strong> una corrutina se ejecuta siempre en el mismo contexto, pero dentro puedes llamar a
+    <strong>funciones de suspensión que cambien de contexto</strong> y ejecuten cosas en otros hilos, pero al volver,
+    sigues estando en el mismo.</p>
+
+<h3>¿Cuándo voy a querer crear funciones de suspensión?</h3>
+
+<p>Si ya tengo <code>withContext()</code>, ¿para qué quiero crear funciones de suspensión que además ya sé que no
+    suspenden nada?</p>
+<p>Como programador, querrás hacer métodos atómicos, por lo que, siempre que quieras extraer un método de una corrutina
+    y dentro de este vayas a cambiar de contexto para hacer una operación costosa, o sencillamente tengas que llamar a
+    otra función de suspensión, deberás crear una función de suspensión.</p>
+<p>Por ejemplo, el ejemplo anterior podríamos haberlo hecho así:</p>
+
+<pre><span class="palabra-reservada">fun</span> <span class="metodo">llamarAMama</span>() {
+    <span class="propiedad-extension">viewModelScope</span>.<span class="funcion-extension">launch</span> {
+        <span class="comentario">// Aquí estamos en el hilo principal</span>
+
+        <span class="palabra-reservada">val</span> numero = buscarNumero(<span class="texto">"Mamá"</span>)
+
+        <span class="comentario">// Aquí volvemos a estar en el hilo principal</span>
+        marcarNumeroLiveData = numero
+}
+
+<span class="palabra-reservada">suspend fun</span> <span class="metodo">buscarNumero</span>(nombre: String): String =
+    withContext(Dispatchers.<span class="campo-clase">Default</span>) {
+        <span class="comentario">// Aquí estamos en un hilo secundario</span>
+        getContactos().getNumero(<span class="texto">"Mamá"</span>)
+    }
+}</pre>
+
+<p>Declaramos la función <code class="metodo">buscarNumero()</code> como función de suspensión para que pueda llamar a
+    <code>withContext()</code>. Si dentro de la función simplemente tuviéramos este código:</p>
+
+<pre><span class="comentario">suspend</span> <span class="palabra-reservada">fun</span> <span class="metodo">buscarNumero</span>(nombre: String): String = getContactos().getNumero(<span
+        class="texto">"Mamá"</span>)</pre>
+
+<p>El compilador nos seguiría coloreando la palabra reservada <code class="comentario">suspend</code> como sobrante, ya
+    que no se está llamando a ninguna otra función de suspensión, demostrando así que no sirve de nada por sí sola (ya
+    que nadie hace nada con la <code>Continuation</code> que genera).</p>
+
+<h3>Garantizar la seguridad del hilo principal</h3>
+
+<p>Siempre que crees una función de suspensión que ejecute un trabajo costoso, <strong>debes</strong> garantizar que el
+    código al que llamas se va a ejecutar de forma <strong>segura para el hilo principal</strong>.</p>
+
+<p>Garantizar la seguridad del hilo principal quiere decir que, si alguien llama a esta función desde una corrutina que
+    se ejecuta en el hilo principal, este método debe evitar que se bloquee ese hilo. Y esto lo conseguimos cambiando de
+    contexto mediante <code>withContext()</code>, al cual podemos llamar porque estaremos dentro de una función de
+    suspensión.</p>
+
+<p>Mira este otro ejemplo más complejo:</p>
+
+<pre><span class="palabra-reservada">fun</span> <span class="metodo">sendMessage</span>(message: String, addressIndex: Int) {
+    <span class="propiedad-extension">viewModelScope</span>.<span class="funcion-extension">launch</span> {
+        <span class="comentario">// Estamos en el hilo principal</span>
+        <span class="palabra-reservada">val</span> addressList = getAddresses()
+        <span class="palabra-reservada">val</span> address = addressList[addressIndex]
+        <span class="palabra-reservada">val</span> messageWasSent = sendMessage(address, message)
+        <span class="campo-clase">liveData</span>.<span class="campo-clase">value</span> = messageWasSent
+    }
+}</pre>
+
+<p>Habrás averiguado que las funciones <code class="metodo">getAddresses()</code> y <code
+        class="metodo">sendMessage()</code> son funciones de suspensión.</p>
+
+<pre><span class="palabra-reservada">suspend fun</span> <span class="metodo">getAddresses</span>(): List&lt;Address&gt; =
+    withContext(Dispatchers.<span class="campo-clase">IO</span>) {
+        addressRespository.getAddressList()
+    }
+
+<span class="palabra-reservada">suspend fun</span> <span class="metodo">sendMessage</span>(address: Address, message: String): Boolean =
+    withContext(Dispatchers.<span class="campo-clase">IO</span>) {
+        messageApi.sendMessageTo(message, address)
+    }
+}</pre>
+
+<p>Así, la ejecución de <code class="funcion-extension">launch()</code> está confinada al hilo principal, siendo
+    suspendida dos veces por las dos funciones de suspensión (que cambian de contexto) hasta que obtienen el resultado y
+    se lo devuelven al <code class="funcion-extension">launch()</code> para que este acabe devolviendo el resultado de
+    <code class="metodo">sendMessage()</code> por el <em>live data</em> mediante el método <code>setValue()</code> y no
+    <code>postValue()</code>. </p>
+
+<p>Es decir, que lo que hace que la ejecución de una función sea segura para el hilo principal no es el modificador
+    <code class="palabra-reservada">suspend</code> en sí, sino el hecho de que, por convención, en las funciones de
+    suspensión cambiemos de contexto a uno que use un hilo secundario para realizar las tareas costosas.</p>
+
+<h3>delay()</h3>
+
+<p>Esta es otra función de suspensión. Se utiliza para simular un trabajo costoso que dura un determinado periodo de
+    tiempo. Es muy parecida a <code>Thread.<span class="estatico">sleep</span>()</code>, pero no tiene nada que ver.</p>
+<p>Mientras que <code>Thread.<span class="estatico">sleep</span>()</code> <strong>detiene la ejecución del hilo</strong>
+    en el que se encuentra, <code>delay()</code> <strong>suspende la corrutina</strong> por un periodo de tiempo
+    especificado, es decir, no ejecuta las líneas posteriores hasta que no transcurre ese tiempo.</p>
+<p>Así, en este código se imprime &quot;Hola&quot; al transcurrir 4 segundos pero no se bloquea el hilo principal:</p>
+
+<pre><span class="propiedad-extension">viewModelScope</span>.<span class="funcion-extension">launch</span> {
+  delay(<span class="cifra">4000L</span>)
+  println(<span class="texto">"Hola"</span>)
+}</pre>
+
+<p>Sin embargo, en este sí se bloquea:</p>
+
+<pre><span class="propiedad-extension">viewModelScope</span><span class="funcion-extension">.launch</span> {
+  Thread<span class="estatico">.sleep</span>(<span class="cifra">4000L</span>)
+  println(<span class="texto">"Hola"</span>)
+}</pre>
+
+<p>¿Qué está pasando realmente? <code>Thread.<span class="estatico">sleep</span>()</code> detiene el hilo, mientras que
+    <code>delay()</code> suspende, <strong>programa</strong> la reanudación de la corrutina para más adelante. Es decir,
+    es una espera no bloqueante, no impide que el hilo siga pudiendo trabajar por otro lado. El hilo principal no se
+    bloquearía.</p>

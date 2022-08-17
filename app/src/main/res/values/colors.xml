@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="rojo_borrar">#AF0A0E</color>
+  <color name="rojo_incorrecto">#55FF0A0E</color>
+  <color name="naranja_seleccion">#BBE8B30C</color>
+  <color name="verde_seleccion">#FF1FAB08</color>
+  <color name="verde_balsamico">#ff45ffa9</color>
+  <color name="azul_separador">#FF3D4DFF</color>
+  <color name="azul_incorrecto">#6772e7</color>
+  <color name="blanco">#FFFFFF</color>
+  <color name="blanco_intenso">#66FFFFFF</color>
+  <color name="blanco_claro">#44FFFFFF</color>
+  <color name="negro_titulo">#CC000000</color>
+  <color name="negro_intenso">#66000000</color>
+  <color name="negro_claro">#33000000</color>
+
+  <color name="primary">#009688</color>
+  <color name="primary_dark">#00796B</color>
+  <color name="primary_light">#B2DFDB</color>
+  <color name="accent">#03A9F4</color>
+  <color name="primary_text">#212121</color>
+  <color name="secondary_text">#727272</color>
+  <color name="icons">#FFFFFF</color>
+  <color name="divider">#B6B6B6</color>
+  <color name="deep">#1FB6B6B6</color>
+
+</resources>

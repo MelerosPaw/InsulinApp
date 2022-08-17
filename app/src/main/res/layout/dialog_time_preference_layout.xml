@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+
+  <TextView
+    android:id="@+id/tv_message"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Dialog message"
+    android:textSize="16sp"
+    android:layout_weight="1"
+    android:padding="20dp" />
+
+  <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal">
+
+    <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Horas"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+      <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Minutos"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_horizontal">
+
+        <EditText
+          android:id="@+id/et_horas"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:text=""
+          android:maxLength="2"
+          android:ems="4"
+          android:textSize="16sp"
+          android:inputType="number"
+          android:textColor="@color/primary_text" />
+
+      </LinearLayout>
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_gravity="bottom"
+        android:paddingBottom="3dp"
+        android:text=":"
+        android:layout_weight="0" />
+
+      <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_horizontal">
+
+        <EditText
+          android:id="@+id/et_minutos"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:text=""
+          android:ems="4"
+          android:maxLength="2"
+          android:textSize="16sp"
+          android:inputType="number"
+          android:textColor="@color/primary_text" />
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+</LinearLayout>

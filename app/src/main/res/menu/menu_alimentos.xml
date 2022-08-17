@@ -1,0 +1,31 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  tools:context=".AlimentosActivity">
+
+  <item
+    android:id="@+id/actualizar"
+    android:title="@string/menu_actualizar"
+    android:orderInCategory="100"
+    android:icon="@android:drawable/stat_notify_sync"
+    android:showAsAction="ifRoom"
+    app:showAsAction="ifRoom" />
+
+  <item
+    android:id="@+id/modo_lista"
+    android:title="Modo lista"
+    android:orderInCategory="99"
+    android:icon="@android:drawable/ic_menu_zoom"
+    android:showAsAction="ifRoom"
+    app:showAsAction="ifRoom" />
+
+  <item
+    android:id="@+id/modo_tarjeta"
+    android:title="Modo tarjetas"
+    android:orderInCategory="99"
+    android:icon="@android:drawable/zoom_plate"
+    android:showAsAction="ifRoom"
+    app:showAsAction="ifRoom"
+    android:visible="false" />
+
+</menu>

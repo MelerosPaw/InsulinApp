@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/ll_insulinaActual"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:orientation="horizontal"
+  android:padding="10dp"
+  android:background="@color/verde_balsamico"
+  android:visibility="gone">
+
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textSize="12sp"
+    android:textStyle="bold"
+    android:textColor="@color/negro_titulo"
+    android:layout_marginRight="5dp"
+    android:layout_marginEnd="5dp"
+    android:text="@string/texto_insulina"
+    android:id="@+id/tv_tituloInsulinaActual" />
+
+  <TextView
+    android:id="@+id/tv_insulinaActual"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textSize="14sp"
+    android:textColor="@color/negro_titulo"
+    android:text=""
+    android:layout_marginRight="5dp"
+    android:layout_marginEnd="5dp" />
+
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textSize="12sp"
+    android:textColor="@color/negro_titulo"
+    android:text="@string/texto_uds"
+    android:id="@+id/tv_uds" />
+
+</LinearLayout>

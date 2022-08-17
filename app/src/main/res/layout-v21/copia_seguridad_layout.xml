@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  tools:context=".ui.activities.MainActivity"
+  android:animateLayoutChanges="true">
+
+  <include
+    layout="@layout/cabecera_insulina_restante"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+
+  <ListView
+    android:id="@+id/lv_opciones_copia_seguridad"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:listitem="@layout/item_opcion_simple_layout"
+    tools:visibility="gone" />
+
+  <androidx.recyclerview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv_info_copia_container"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_margin="20dp"
+    app:cardCornerRadius="5dp"
+    tools:layout_height="wrap_content">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:paddingLeft="5dp"
+      android:paddingRight="5dp"
+      android:paddingTop="10dp"
+      android:paddingBottom="10dp">
+
+      <TextView
+        android:id="@+id/tv_cabecera_descripcion_copia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:textSize="14sp"
+        android:text="@string/copia_seguridad_actual"
+        android:textColor="@color/negro_titulo" />
+
+      <TextView
+        android:id="@+id/tv_descripcion_copia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:textSize="14sp"
+        android:textColor="@color/negro_titulo"
+        tools:text="Ahora mismo no hay ninguna copia de seguridad, pero puedes hacer una si pulsas aquio allá." />
+
+      <LinearLayout
+        android:id="@+id/ll_info_detalles_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+
+          <Button
+            android:id="@+id/tv_boton_alimentos"
+            style="@style/BotonCopiaSeguridad"
+            android:layout_marginRight="2dp"
+            android:layout_marginEnd="2dp"
+            android:text="@string/food" />
+
+          <Button
+            android:id="@+id/tv_boton_entradas"
+            style="@style/BotonCopiaSeguridad"
+            android:layout_marginRight="2dp"
+            android:layout_marginEnd="2dp"
+            android:text="@string/records" />
+
+          <Button
+            android:id="@+id/tv_boton_periodos"
+            style="@style/BotonCopiaSeguridad"
+            android:layout_marginRight="2dp"
+            android:layout_marginEnd="2dp"
+            android:text="@string/periods" />
+
+          <Button
+            android:id="@+id/tv_boton_ajustes"
+            style="@style/BotonCopiaSeguridad"
+            android:text="@string/settings" />
+
+        </LinearLayout>
+
+        <ScrollView
+          android:id="@+id/sv_scroll_view"
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_marginTop="10dp"
+          android:layout_weight="1">
+
+          <TextView
+            android:id="@+id/tv_contenido_anterior"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textColor="@color/negro_titulo"
+            android:textSize="14sp"
+            tools:text="Target lost.\nAre you still there?\nAreyou?" />
+
+        </ScrollView>
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+  </androidx.recyclerview.widget.CardView>
+
+</LinearLayout>

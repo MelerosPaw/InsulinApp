@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <julioverne.insulinapp.sharedpreferences.SwitchPreference
+    android:key="backup_enabled"
+    android:defaultValue="false"
+    android:title="Realizar copia de seguridad"
+    android:layout="@layout/switch_item_preference"
+    android:summary="@string/backup_enabled_summary" />
+
+  <julioverne.insulinapp.sharedpreferences.TimePreference
+    android:key="backup_tiempo"
+    android:title="¿A qué hora?"
+    android:layout="@layout/item_preference"
+    android:dialogLayout="@layout/dialog_time_preference_layout"
+    android:maxLength="3"
+    android:summary="@string/backup_tiempo_summary"
+    android:dialogMessage="La copia de seguridad se realizará aproximadamente a las..." />
+
+</PreferenceScreen>

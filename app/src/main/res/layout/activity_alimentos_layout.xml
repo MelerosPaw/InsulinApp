@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  tools:context=".ui.activities.AlimentosActivity">
+
+  <include
+    layout="@layout/cabecera_insulina_restante"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+
+  <FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:descendantFocusability="beforeDescendants"
+      android:focusableInTouchMode="true"
+      android:orientation="vertical">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
+
+        <EditText
+          android:id="@+id/et_nombre_alimento"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:hint="@string/hint_buscar_alimento"
+          android:inputType="text"
+          android:maxLines="1"
+          android:paddingStart="20dp"
+          android:paddingEnd="20dp"
+          android:textColor="@android:color/black" />
+
+      </LinearLayout>
+
+      <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/rv_alimentos"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/deep"
+          android:scrollbarThumbVertical="@drawable/scrollbar"
+          android:scrollbars="vertical"
+          tools:listitem="@layout/subitem_tarjeta" />
+
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="3dp"
+          android:background="@drawable/selector_sombra_inferior" />
+
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="3dp"
+          android:layout_alignBottom="@id/rv_alimentos"
+          android:background="@drawable/sombra_superior_selector" />
+
+        <android.support.design.widget.FloatingActionButton
+          android:id="@+id/fab_crear_alimentos"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:layout_alignParentRight="true"
+          android:layout_alignParentBottom="true"
+          android:layout_marginEnd="@dimen/fab_margin"
+          android:layout_marginRight="@dimen/fab_margin"
+          android:layout_marginBottom="@dimen/fab_margin"
+          android:src="@android:drawable/ic_input_add"
+          app:fabSize="normal" />
+
+        <android.support.design.widget.FloatingActionButton
+          android:id="@+id/fab_borrar_alimentos"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:layout_alignParentRight="true"
+          android:layout_alignParentBottom="true"
+          android:layout_marginEnd="@dimen/fab_margin"
+          android:layout_marginRight="@dimen/fab_margin"
+          android:layout_marginBottom="@dimen/fab_margin"
+          android:src="@android:drawable/ic_menu_delete"
+          android:visibility="invisible"
+          app:backgroundTint="@color/rojo_borrar"
+          app:fabSize="normal"
+          tools:visibility="visible" />
+
+        <android.support.design.widget.FloatingActionButton
+          android:id="@+id/fab_seleccionar_alimentos"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:layout_alignParentRight="true"
+          android:layout_alignParentBottom="true"
+          android:layout_marginEnd="@dimen/fab_margin"
+          android:layout_marginRight="@dimen/fab_margin"
+          android:layout_marginBottom="@dimen/fab_margin"
+          android:src="@android:drawable/ic_menu_add"
+          android:visibility="invisible"
+          app:backgroundTint="@color/naranja_seleccion"
+          app:fabSize="normal"
+          tools:visibility="visible" />
+
+      </RelativeLayout>
+
+    </LinearLayout>
+
+    <FrameLayout
+      android:id="@+id/loading_view"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/blanco_intenso"
+      android:clickable="true"
+      android:visibility="invisible"
+      tools:visibility="gone">
+
+      <ProgressBar
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:indeterminate="true" />
+
+    </FrameLayout>
+
+  </FrameLayout>
+
+</LinearLayout>

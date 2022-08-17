@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:gravity="center">
+
+  <TextView
+    android:id="@+id/tv_titulo_dosis"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    android:text="@string/texto_dosis"
+    android:textColor="@color/primary"
+    android:padding="50dp"
+    android:gravity="center" />
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="25dp"
+    android:paddingRight="25dp">
+
+
+    <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+
+      <TextView
+        android:id="@+id/tv_tituloDosisCorrectiva"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:text="@string/texto_correctiva"
+        android:layout_alignParentLeft="true" />
+
+      <TextView
+        android:id="@+id/tv_unidadesDosisCorrectiva"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="125"
+        android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+
+      <TextView
+        android:id="@+id/tv_titulo_alimentos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:text="@string/texto_titulo_alimentos"
+        android:layout_alignParentLeft="true" />
+
+      <TextView
+        android:id="@+id/tv_unidadesAlimentos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No"
+        android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+
+      <TextView
+        android:id="@+id/tv_tituloInsulinaRestante"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:text="@string/texto_insulina_restante"
+        android:layout_alignParentLeft="true" />
+
+      <TextView
+        android:id="@+id/tv_insulinaRestante"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No"
+        android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
+
+  </LinearLayout>
+
+
+  <LinearLayout
+    android:id="@+id/ll_dosisFinal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:orientation="horizontal"
+    android:gravity="center_horizontal">
+
+    <TextView
+      android:id="@+id/tv_dosisTotal"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="40"
+      android:textSize="24sp" />
+
+    <TextView
+      android:id="@+id/tv_uds"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textColor="@android:color/black"
+      android:text="@string/texto_uds"
+      android:layout_marginLeft="5dp"
+      android:textSize="18sp" />
+
+  </LinearLayout>
+
+</LinearLayout>

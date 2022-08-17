@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/primary"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+      android:id="@+id/tv_titulo_periodos"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/texto_ratio"
+      android:textColor="@color/blanco"
+      android:textSize="16sp"
+      android:textStyle="bold" />
+
+    <TextView
+      android:id="@+id/tv_texto_superior"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="10dp"
+      android:text="@string/texto_periodos"
+      android:textColor="@color/primary_light"
+      android:textSize="12sp" />
+
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:layout_marginBottom="16dp"
+      android:background="@color/divider" />
+
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<TableLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentLeft="true">-->
+
+    <!--<TableRow-->
+    <!--android:layout_marginBottom="5dp">-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/tv_desde"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="@string/texto_desde"-->
+    <!--android:textSize="14sp"-->
+    <!--android:textColor="@color/primary_light"-->
+    <!--android:textStyle="bold"/>-->
+
+    <!--<EditText-->
+    <!--android:id="@+id/et_hora_inicio"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:inputType="number"-->
+    <!--android:maxLength="2"-->
+    <!--android:ems="2"-->
+    <!--android:text=""-->
+    <!--android:textSize="20sp"-->
+    <!--android:layout_marginRight="2dp"-->
+    <!--android:layout_marginEnd="2dp"-->
+    <!--android:layout_marginLeft="10dp"-->
+    <!--android:layout_marginStart="10dp"-->
+    <!--android:gravity="center"-->
+    <!--android:textColor="@color/primary_text"-->
+    <!--android:background="@android:color/white"/>-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text=":"-->
+    <!--android:textColor="@color/primary_light"-->
+    <!--android:textSize="20sp"/>-->
+
+    <!--<EditText-->
+    <!--android:id="@+id/et_minutos_inicio"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:inputType="number"-->
+    <!--android:text=""-->
+    <!--android:maxLength="2"-->
+    <!--android:ems="2"-->
+    <!--android:textSize="20sp"-->
+    <!--android:layout_marginRight="10dp"-->
+    <!--android:layout_marginEnd="10dp"-->
+    <!--android:layout_marginLeft="2dp"-->
+    <!--android:layout_marginStart="2dp"-->
+    <!--android:gravity="center"-->
+    <!--android:textColor="@color/primary_text"-->
+    <!--android:background="@android:color/white"/>-->
+
+    <!--</TableRow>-->
+
+    <!--<TableRow-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:layout_marginBottom="10dp">-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/tv_hasta"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="@string/texto_hasta"-->
+    <!--android:textSize="14sp"-->
+    <!--android:layout_gravity="right"-->
+    <!--android:textColor="@color/primary_light"-->
+    <!--android:textStyle="bold" />-->
+
+    <!--<EditText-->
+    <!--android:id="@+id/et_hora_fin"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:inputType="number"-->
+    <!--android:text=""-->
+    <!--android:maxLength="2"-->
+    <!--android:ems="2"-->
+    <!--android:textSize="20sp"-->
+    <!--android:layout_marginRight="2dp"-->
+    <!--android:layout_marginLeft="10dp"-->
+    <!--android:gravity="center"-->
+    <!--android:textColor="@color/primary_text"-->
+    <!--android:background="@android:color/white"/>-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text=":"-->
+    <!--android:textColor="@color/primary_light"-->
+    <!--android:textSize="20sp"/>-->
+
+    <!--<EditText-->
+    <!--android:id="@+id/et_minutos_fin"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:inputType="number"-->
+    <!--android:text=""-->
+    <!--android:maxLength="2"-->
+    <!--android:ems="2"-->
+    <!--android:textSize="20sp"-->
+    <!--android:layout_marginRight="10dp"-->
+    <!--android:layout_marginLeft="2dp"-->
+    <!--android:gravity="center"-->
+    <!--android:textColor="@color/primary_text"-->
+    <!--android:background="@android:color/white"/>-->
+
+    <!--</TableRow>-->
+
+    <!--</TableLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical"-->
+    <!--android:layout_marginLeft="10dp"-->
+    <!--android:layout_marginStart="10dp"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_alignParentEnd="true"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:gravity="end">-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<EditText-->
+    <!--android:id="@+id/et_unidades"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="5dp"-->
+    <!--android:lines="1"-->
+    <!--android:ems="2"-->
+    <!--android:maxLength="4"-->
+    <!--android:textSize="20dp"-->
+    <!--android:digits="1234567890,."-->
+    <!--android:inputType="numberDecimal"-->
+    <!--android:gravity="center"-->
+    <!--android:textColor="@android:color/black"-->
+    <!--android:textColorHint="@color/primary_light"-->
+    <!--android:background="@android:color/white"/>-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/tv_unidades"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:textSize="14dp"-->
+    <!--android:layout_marginLeft="5dp"-->
+    <!--android:textColor="@color/primary_light"-->
+    <!--android:text="@string/texto_simbolo_unidades"/>-->
+
+    <!--</LinearLayout>-->
+
+    <!--</LinearLayout>-->
+
+    <!--</RelativeLayout>-->
+
+    <Button
+      android:id="@+id/btn_nuevo_periodo"
+      style="@style/Widget.AppCompat.Button.Borderless"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/boton_nuevo_periodo"
+      android:background="@drawable/shape_boton_invisible"
+      android:textColor="@color/blanco" />
+
+  </LinearLayout>
+
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1">
+
+    <ListView
+      android:id="@+id/lv_periodos"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/deep"
+      tools:listitem="@layout/item_periodo" />
+
+    <View
+      android:id="@+id/v_sombra"
+      android:layout_width="match_parent"
+      android:layout_height="3dp"
+      android:background="@drawable/selector_sombra_inferior" />
+
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="3dp"
+      android:layout_alignBottom="@id/lv_periodos"
+      android:background="@drawable/sombra_superior_selector" />
+
+  </RelativeLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <Button
+      android:id="@+id/btn_terminar"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:background="@drawable/selector_simple"
+      android:text="@string/boton_terminar"
+      android:textColor="@color/primary_text" />
+
+  </LinearLayout>
+
+</LinearLayout>

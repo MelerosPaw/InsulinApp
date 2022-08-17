@@ -1,0 +1,49 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activities.MenuFragment">
+
+    <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1">
+
+      <View
+        android:id="@+id/sombraSuperior"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@drawable/selector_sombra_inferior" />
+
+      <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_alignBottom="@+id/fragment"
+        android:background="@drawable/sombra_superior_selector" />
+
+      <FrameLayout
+        android:id="@id/fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignTop="@id/sombraSuperior"
+        android:background="@color/deep" />
+
+    </RelativeLayout>
+
+    <Button
+      android:id="@+id/btn_volver"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/selector_simple"
+      android:gravity="center"
+      android:text="@string/go_back"
+      android:textColor="@android:color/black"
+      app:fontFamily="@font/dejavu_bold" />
+
+  </LinearLayout>
+
+</layout>

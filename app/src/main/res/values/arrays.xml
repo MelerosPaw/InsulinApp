@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string-array name="opciones_main">
+    <item>Realizar un control</item>
+    <item>Diario</item>
+    <item>Alimentos</item>
+    <item>Insulina actual</item>
+    <item>Alarmas</item>
+  </string-array>
+
+  <string-array name="opciones_copia_seguridad">
+    <item>Guardar</item>
+    <item>Restaurar</item>
+    <item>Eliminar</item>
+  </string-array>
+
+</resources>

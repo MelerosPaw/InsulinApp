@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+
+  <androidx.cardview.widget.CardView
+    android:id="@+id/root_tarjeta"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
+    android:layout_marginTop="10dp"
+    android:animateLayoutChanges="true"
+    app:cardBackgroundColor="@color/primary_light"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="5dp">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@android:color/transparent"
+      android:orientation="vertical">
+
+      <LinearLayout
+        android:id="@+id/ll_contenido"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:animateLayoutChanges="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:orientation="vertical"
+        android:padding="7dp">
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="7dp"
+          android:gravity="center_vertical"
+          android:orientation="horizontal">
+
+          <TextView
+            android:id="@+id/tv_nombre_alimento"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:gravity="center_horizontal"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="Macarrones" />
+
+          <ImageView
+            android:id="@+id/iv_usuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_usuario"
+            android:visibility="gone" />
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"
+          android:background="@drawable/forma_item_interno_alimento_activity"
+          android:focusable="false"
+          android:focusableInTouchMode="false"
+          android:orientation="horizontal"
+          android:padding="15dp"
+          android:weightSum="4">
+
+          <ImageView
+            android:id="@+id/iv_imagen_alimento"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="2"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
+
+          <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:orientation="vertical">
+
+            <TextView
+              android:id="@+id/tv_titulo_unidad_medida"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginEnd="5dp"
+              android:focusable="false"
+              android:focusableInTouchMode="false"
+              android:text="@string/texto_unidad_medida"
+              android:textStyle="bold" />
+
+            <TextView
+              android:id="@+id/tv_unidad_medida"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:focusable="false"
+              android:focusableInTouchMode="false"
+              tools:text="Plato grande (300gr)" />
+
+            <TextView
+              android:id="@+id/tv_titulo_cantidad"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginEnd="5dp"
+              android:focusable="false"
+              android:focusableInTouchMode="false"
+              android:text="@string/texto_cantidad"
+              android:textStyle="bold" />
+
+            <TextView
+              android:id="@+id/tv_cantidad"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:focusable="false"
+              android:focusableInTouchMode="false"
+              tools:text="1" />
+
+            <TextView
+              android:id="@+id/tv_titulo_raciones"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginEnd="5dp"
+              android:focusable="false"
+              android:focusableInTouchMode="false"
+              android:text="@string/texto_raciones_hc"
+              android:textStyle="bold" />
+
+            <TextView
+              android:id="@+id/tv_raciones"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:focusable="false"
+              android:focusableInTouchMode="false"
+              tools:text="2.5" />
+
+          </LinearLayout>
+
+        </LinearLayout>
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+  </androidx.cardview.widget.CardView>
+
+  <LinearLayout
+    android:id="@+id/root_lista"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:background="@color/primary_light"
+    android:gravity="center_vertical"
+    android:paddingBottom="1dip"
+    android:paddingEnd="16dip"
+    android:paddingStart="16dip"
+    android:paddingTop="1dip"
+    android:visibility="gone">
+
+    <ImageView
+      android:id="@+id/iv_imagen"
+      android:layout_width="80dip"
+      android:layout_height="80dip" />
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+      android:paddingStart="?android:attr/listPreferredItemPaddingStart">
+
+      <TextView
+        android:id="@+id/tv_nombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp" />
+
+      <TextView
+        android:id="@+id/tv_resumen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+</FrameLayout>

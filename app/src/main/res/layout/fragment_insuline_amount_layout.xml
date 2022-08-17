@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="julioverne.insulinapp.utils.DecimalFormatUtils" />
+
+    <import type="android.view.View" />
+
+    <variable
+      name="glucoseAmount"
+      type="Float" />
+
+  </data>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+      android:id="@+id/tv_insulina_actual"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:textAlignment="center"
+      android:text="@string/insulina_actual"
+      android:textAppearance="?android:attr/textAppearanceLarge"
+      android:textColor="@color/primary"
+      app:fontFamily="@font/dejavu_extra_light" />
+
+    <TextView
+      android:id="@+id/tv_actualmente"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="50dp"
+      android:text="@{glucoseAmount == -1f ? @string/sin_controles : @string/insulina_actual_aproximada}"
+      android:textColor="@android:color/black"
+      app:fontFamily="@font/dejavu_extra_light"
+      tools:text="@string/insulina_actual_aproximada" />
+
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+
+      <TextView
+        android:id="@+id/tv_insulina_total"
+        visible="@{glucoseAmount == -1f}"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@{DecimalFormatUtils.decimalToStringIfZero(glucoseAmount, 2, `.`, `,`)}"
+        android:textSize="24sp"
+        app:fontFamily="@font/dejavu_bold"
+        tools:text="40" />
+
+      <TextView
+        android:id="@+id/tv_uds"
+        visible="@{glucoseAmount == -1f}"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="6dp"
+        android:text="@string/texto_uds"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:fontFamily="@font/dejavu_extra_light" />
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+</layout>

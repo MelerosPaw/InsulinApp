@@ -1,0 +1,290 @@
+<resources>
+
+  <string name="app_name" translatable="false">InsulinApp</string>
+
+  <!--region MAIN ACTIVITY-->
+  <string name="advertencia_preferencias_sin_configurar">Antes de realizar un control, tu médico debe haber configurado tus parámetros en \"Configuración\"</string>
+  <!--endregion-->
+
+  <!--region ACTIONBAR-->
+  <string name="menu_configuracion">Configuración</string>
+  <string name="menu_actualizar">Actualizar</string>
+  <string name="menu_alimentos">Alimentos</string>
+  <string name="menu_atras">Atrás</string>
+  <string name="texto_titulo_seccion_control">Nuevo control</string>
+  <string name="texto_titulo_seccion_periodos">Periodos</string>
+  <string name="texto_titulo_seccion_diario">Diario</string>
+  <string name="texto_titulo_seccion_alimentos">Alimentos</string>
+  <string name="texto_titulo_seccion_configuracion">Configuración</string>
+  <string name="texto_titulo_seccion_ajustes_copia_seguridad">Ajustes de copia de seguridad</string>
+  <string name="titulo_seleccion_alimentos">Seleccionar</string>
+  <!--endregion-->
+
+  <!--region CABECERA-->
+  <string name="texto_insulina">INSULINA ACTUAL APROX.:</string>
+  <!--endregion-->
+
+  <!--region CONTROL-->
+  <string name="advertencia_sin_texto">Tienes que escribir el resultado del control.</string>
+  <string name="advertencia_glucosa_maxima_sin_configurar">Aún no has configurado la cantidad máxima de glucosa. Asegúrate de haber configurado todos los valores de la Configuración.</string>
+  <string name="advertencia_glucosa_minima_sin_configurar">Aún no has configurado la cantidad mínima de glucosa. Asegúrate de haber configurado todos los valores de la Configuración.</string>
+  <string name="advertencia_duracion_horas_sin_configurar">Aún no has configurado las horas de duración de tu insulona rápida. Asegúrate de haber configurado todos los valores de la Configuración.</string>
+  <string name="advertencia_duracion_minutos_sin_configurar">Aún no has configurado los minutos de duración de tu insulina rápida. Asegúrate de haber configurado todos los valores de la Configuración.</string>
+  <string name="advertencia_cetonas_horas_sin_configurar">Aún no has configurado la cantidad de horas a las que hay que avisarte en caso de que tengas cetonas. Asegúrate de haber configurado todos los valores de la Configuración.</string>
+  <string name="advertencia_cetonas_minutos_sin_configurar">Aún no has configurado la cantidad de minutos a los que hay que avisarte en caso de que tengas cetonas. Asegúrate de haber configurado todos los valores de la Configuración.</string>
+  <string name="advertencia_factor_sensibilidad_sin_configurar">Aún no has configurado tu factor de sensibilidada la insulina. Asegúrate de haber configurado todos los valores de la Configuración.</string>
+  <string name="advertencia_primeroControl">Primero tienes que introducir los resultados del control.</string>
+  <string name="advertencia_no_hay_alimentos">No hay alimentos en la base de datos. Ve a \"Alimentos\" y actualiza la lista o añade alguno antes de seguir.</string>
+  <string name="advertencia_entrada_guardada">Entrada guardada</string>
+  <string name="advertencia_imposible_guardar">No se ha podido guardar la entrada. Vuelve a intentarlo y, si no da resultado, reinicia.</string>
+  <string name="advertencia_faltan_cantidades">Te faltan cantidades por indicar</string>
+  <string name="advertencia_necesita_recalcular">Tienes que recalcular la dosis antes de guardar la entrada con estos alimentos</string>
+  <string name="advertencia_alimentos_no_guardados">No se han guardado los alimentos correctamente. Vuelve a intentarlo y si vuelve a fallar, reinicia la aplicación.</string>
+  <string name="advertencia_alimentos_no_recogidos">No se pueden recoger los alimentos de la lista. Vuelve a intentarlo y, si vuelve a fallar, reinicia la aplicación.</string>
+  <string name="advertencias_sin_glucosa">Tienes que indicar la cantidad de glucosa.</string>
+  <string name="advertencias_glucosa_no_es_cifra">La cantidad de glucosa tiene que ser un número entero.</string>
+  <string name="advertencias_cantidad_incorrecta">Cantidad incorrecta.</string>
+  <string name="boton_siguiente">Siguiente</string>
+  <string name="boton_atras">Atrás</string>
+  <string name="boton_comer">COMER</string>
+  <string name="boton_no_comer">NO COMER</string>
+  <string name="boton_calcular_dosis">Calcular dosis</string>
+  <string name="boton_recalcular_dosis">Recalcular dosis</string>
+  <string name="boton_guardar_entrada">Guardar entrada</string>
+  <string name="boton_si">SÍ</string>
+  <string name="boton_no">NO</string>
+  <string name="si">Sí</string>
+  <string name="no">No</string>
+  <string name="salir">Salir</string>
+  <string name="siguiente">Siguiente</string>
+  <string name="texto_antes_comer">Antes de comer</string>
+  <string name="texto_mensaje_glucosa">Hazte un control e introduce la cantidad de glucosa que tienes en la sangre.</string>
+  <string name="texto_vas_a_comer">¿Vas a comer?\nIntroduce los alimentos que vas a tomar.</string>
+  <string name="texto_seguro">¿Son correctos los datos?</string>
+  <string name="texto_dosis">Dosis de Insulina</string>
+  <string name="texto_tomar_glucosa">Tal vez debas comer algo.</string>
+  <string name="texto_resultado_correcto">Tu nivel de glucosa en sangre es correcto.</string>
+  <string name="texto_resultado_no_hay_insulina_incorrecto_minimo">Tu nivel está por debajo del mínimo permitido.</string>
+  <string name="texto_resultado_no_hay_insulina_incorrecto_maximo">Tu nivel está por encima del máximo permitido.</string>
+  <string name="texto_resultado_no_es_conveniente">Sin embargo la cantidad es tan pequeña que no es conveniente que te administres ninguna dosis.</string>
+  <string name="texto_simbolo_unidades">UD.</string>
+  <string name="texto_alimento">Alimento…</string>
+  <string name="texto_esperar_fin_absorcion">Aún no se ha superado el pico de la insulina, por lo que es demasiado pronto para calcular una dosis correctiva.</string>
+  <string name="texto_resultado_hay_insulina_con_dosis">Cuando toda la glucosa sea absorbida tu nivel de glucosa no se habrá estabilizado. Dosis recomendada:</string>
+  <string name="texto_resultado_hay_insulina_sin_dosis">No es necesaria ninguna dosis.</string>
+  <string name="texto_despues_comer">¿Es un control después de comer?</string>
+  <string name="texto_titulo_glucosa_sangre">Glucosa en sangre</string>
+  <string name="texto_titulo_despues_comer">Después de comer</string>
+  <string name="texto_titulo_alimentos">Alimentos</string>
+  <string name="texto_correctiva">Dosis correctiva</string>
+  <plurals name="texto_resultado_todavia_hay_insulina">
+    <!--TODO Cambiar el plural de cero-->
+    <item quantity="zero">Todavía te quedan %1$d unidades de insulina.</item>
+    <item quantity="one">Todavía te queda %1$d unidad de insulina.</item>
+    <item quantity="other">Todavía te quedan %1$d unidades de insulina.</item>
+  </plurals>
+  <plurals name="texto_resultado_correcto">
+    <item quantity="one">Cuando sea absorbida, tu nivel de glucosa se habrá estabilizado.</item>
+    <item quantity="other">Cuando sean absorbidas, tu nivel de glucosa se habrá estabilizado</item>
+  </plurals>
+  <plurals name="texto_resultado_incorrecto">
+    <item quantity="one">Cuando sea absorbida, tu nivel de glucosa no se habrá estabilizado.</item>
+    <item quantity="other">Cuando sean absorbidas, tu nivel de glucosa no se habrá estabilizado</item>
+  </plurals>
+  <!--endregion-->
+
+  <!--region ALIMENTOS-->
+  <string name="dialog_title">Eliminar alimentos</string>
+  <string name="dialog_message_aviso_eliminar">Solo se pueden eliminar los alimentos creados por el usuario.</string>
+  <string name="dialog_message_son_alimentos_del_sistema">son alimentos propios del sistema y no se pueden eliminar.</string>
+  <string name="dialog_message_solo_se_eliminaran">No se pueden eliminar los alimentos del sistema. Solo se eliminarán los sigientes alimentos:</string>
+  <string name="dialog_message_se_eliminaran">Se eliminarán los siguientes alimentos:</string>
+  <string name="dialog_message_seguro">¿Seguro que quieres borrar estos alimentos?</string>
+  <string name="cancelar">Cancelar</string>
+  <string name="dialog_borrar">Borrar</string>
+  <string name="dialog_aceptar">Aceptar</string>
+  <string name="dialog_entendido">Entendido</string>
+  <plurals name="dialog_eliminado">
+    <item quantity="one">Un alimento eliminado</item>
+    <item quantity="other">%$1s alimentos eliminados</item>
+  </plurals>
+  <string name="dialog_sin_seleccion">No se ha seleccionado ningún alimento.</string>
+  <string name="advertencia_imposible_eliminar">No se han podido eliminar los alimentos seleccionados.</string>
+  <string name="advertencia_seleccionar_alimento_sistema">No se pueden seleccionar los alimentos del sistema.</string>
+  <string name="advertencia_recargar_alimentos">Debe de haber un problema, porque no se han encontrado alimentos. Actualiza la lista de alimentos pulsando el icono de la barra superior.</string>
+  <string name="advertencia_alimento_no_guardado">No se ha podido guardar el alimento. Inténtalo de nuevo. Si el problema persiste, reinicia la aplicación y vuelve a intentarlo.</string>
+  <string name="advertencia_nombre_incorrecto">El nombre no es correcto. Indica un nombre distinto.</string>
+  <string name="advertencia_cantidad_incorrecta">No has indicado una cantidad de unidades correcta.</string>
+  <string name="advertencia_raciones_incorrectas">No has indicado una cantidad de raciones correcta.</string>
+  <string name="advertencia_sin_galeria">Tu sistema no dispone de una galería de fotos.</string>
+  <string name="advertencia_sin_camara">Tu dispositivo no cuenta con cámara de fotos. No puedes un alimento nuevo.</string>
+  <string name="advertencia_repetido">Ya existe el alimento %1$s. Escoge otro nombre.</string>
+  <string name="advertencia_foto">Toma una foto del alimento.</string>
+  <string name="advertencia_x_imagenes_borradas">"Se han borrado %1$d imágenes"</string>
+  <string name="modificado">Alimento modificado.</string>
+  <string name="texto_cantidad">Cantidad</string>
+  <string name="texto_unidad_medida">Tipo de medida</string>
+  <string name="texto_raciones_hc">Raciones de HC</string>
+  <string name="advertencia_alimento_anadido">Alimento añadido</string>
+  <string name="log_no_picture_received_from_camera">No hay llegado la imagen de la cámara.</string>
+  <string name="mensaje_elige_image">Selecciona una imagen…</string>
+  <string name="hint_buscar_alimento">Buscar alimento…</string>
+  <string name="add">Añadir</string>
+  <string name="alimento_anadido">Se ha añadido \"%1$s\"</string>
+  <string name="resumen_parte_arriba">%1$s %2$s</string>
+  <string name="resumen_parte_abajo">%1$s %2$s de HC</string>
+  <string name="editar_alimento">Editar</string>
+  <string name="dialog_editar_nombre">Nombre</string>
+  <plurals name="units">
+    <item quantity="one">unidad</item>
+    <item quantity="other">unidades</item>
+  </plurals>
+  <plurals name="contains">
+    <item quantity="one">contiene</item>
+    <item quantity="other">contienen</item>
+  </plurals>
+  <plurals name="rations">
+    <item quantity="one">ración</item>
+    <item quantity="other">raciones</item>
+  </plurals>
+  <string name="x_units_contain_x_rations">%$1s %$2s (%$3s) %$4s %$5s %$6s de glucosa</string>
+  <!--endregion-->
+
+  <!--region DIARIO-->
+  <string name="texto_no_hay_entradas">No hay entradas</string>
+  <string name="texto_fecha">Fecha</string>
+  <string name="texto_glucosa_sangre">Glucosa\nen Sangre</string>
+  <string name="texto_dosis_insulina">Dosis de\nInsulina</string>
+  <string name="texto_mgdl">mg/dl</string>
+  <string name="texto_uds">UDS.</string>
+  <string name="texto_insulina_restante">Insulina restante</string>
+  <string name="texto_cerrar">Cerrar</string>
+  <string name="reinstalar">Ha habido un problema. Vuelve a instalar la aplicación.</string>
+  <!--endregion-->
+
+  <!--region DATA MANAGER-->
+  <plurals name="advertencia_faltan_permisos">
+    <item quantity="one">Falta por configurar el siguiente parámetro: %1$s</item>
+    <item quantity="other">Faltan por configurar los siguientes parámetros: %1$s</item>
+  </plurals>
+  <string name="advertencia_alimento_no_encontrado">No se ha podido encontrar el alimento que se quiere añadir.</string>
+  <string name="advertencia_hay_copia_db">"Hay una copia de seguridad almacenada en la tarjeta externa. ¿Quieres restaurarla?"</string>
+  <string name="advertencia_hay_copia_ajustes">"Hay una copia de los ajustes anteriores con los siguientes valores:"</string>
+  <string name="advertencia_tambien_hay_copia_ajustes">"También hay una copia de los ajustes anteriores con los siguientes valores:"</string>
+  <!--endregion-->
+
+  <!--region PERIODOS-->
+  <string name="texto_ratio">Ratio de insulina</string>
+  <string name="texto_periodos">Establece periodos e indica las unidades de insulina por ración. Los periodos no indicados tendrán una ratio de 1 UD.</string>
+  <string name="texto_desde">Desde las</string>
+  <string name="texto_hasta">hasta las</string>
+  <string name="texto_unidades">Unidades</string>
+  <string name="advertencia_faltan_datos">Faltan datos por indicar</string>
+  <string name="advertencia_periodo_repetido">Ya existe un periodo que comprende las horas indicadas</string>
+  <string name="advertencia_unidades_incorrectas">Las unidades por ración deben ser un número entero o decimal</string>
+  <string name="advertencia_sin_periodos">La ratio de insulina será de 1 Racion - 1 UD.</string>
+  <string name="advertencia_periodo_no_guardado">El periodo no se ha guardado. Inténtalo de nuevo. Si el problema persiste, reinicia la aplicación.</string>
+  <string name="advertencia_horas_incorrectas">No has indicado las horas correctamente.</string>
+  <string name="advertencia_misma_hora">El periodo no puede empezar y terminar a la misma hora.</string>
+  <string name="boton_nuevo_periodo">+ Añadir periodo</string>
+  <string name="boton_terminar">Terminar</string>
+  <string name="definir">Definir</string>
+  <string name="titulo_dialogo_nuevo_periodo">Nuevo periodo</string>
+  <string name="hora_inicio_periodo">Hora de inicio</string>
+  <string name="hora_fin_periodo">Hora de fin</string>
+  <string name="mensaje_dialogo_ratio_periodo">Cantidad de insulina</string>
+  <string name="mensaje_dialogo_cantidad_periodo">¿Qué cantidad de insulina corresponde a este periodo?</string>
+  <string name="guion">-</string>
+  <string name="sin_hora">--:--</string>
+  <string name="finalizar">Finalizar</string>
+  <!--endregion-->
+
+  <!--region SERVICE - ACTUALIZARALIMENTOS-->
+  <plurals name="advertencia_alimentos_nuevos">
+    <item quantity="zero">No hay alimentos nuevos</item>
+    <item quantity="one">Se ha añadido un alimento nuevo</item>
+    <item quantity="other">Se han añadido %1$s alimentos nuevos</item>
+  </plurals>
+  <plurals name="advertencia_alimentos_actualizados">
+    <item quantity="zero">No se han actualizado ningún alimento</item>
+    <item quantity="one">Se ha actualizado un alimento </item>
+    <item quantity="other">Se han actualizado %1$s alimentos </item>
+  </plurals>
+  <string name="advertencia_sin_conexion">Tienes que activar el tráfico de datos o conectarte a una red WiFi para actualizar.</string>
+  <string name="advertencia_resultados_cero">No se ha recibido ningún alimento nuevo</string>
+  <string name="advertencia_servidor_vacio">No hay alimentos en el servidor de alimentos. Estamos trabajando en ello.</string>
+  <string name="advertencia_problemas_red">No se ha podido descargar ningún alimento. Comprueba tu conexión de red.</string>
+  <string name="advertencia_mantenimiento">Actualmente el servidor de alimentos no está disponible. Estamos trabajando en ello.3</string>
+  <!--endregion-->
+
+  <!--region CONFIGURACIÓN-->
+  <string name="clave">CAA1C</string>
+  <string name="texto_solicita_clave">Si es usted médico, introduzca la clave de configuración:</string>
+  <string name="texto_clave_incorrecta">Clave incorrecta.</string>
+  <string name="texto_titulo_configuracion">Configuración de parámetros</string>
+  <string name="texto_mensaje_superior_configuracion">Configure todos los parámetros para que su paciente pueda utilizar InsulinApp</string>
+  <string name="advertencia_sin_valor">No has escrito nada. Se conservará el valor anterior</string>
+  <string name="advertencia_minima_incorrecta">La glucosa mínima debe ser menor que la glucosa máxima</string>
+  <string name="advertencia_maxima_incorrecta">La glucosa máxima debe ser mayor que la glucosa mínima</string>
+  <string name="backup_enabled_summary">Se alamacenará una copia de seguridad de tus alimentos, entradas y ajustes en la tarjeta SD.</string>
+  <string name="backup_tiempo_summary">Hora a la que se realizará la copia de seguridad.</string>
+  <!--endregion-->
+
+  <!--region PREFERENCIAS-->
+  <string name="prefrencia_duracion_horas">duracion_horas</string>
+  <string name="prefrencia_duracion_minutos">duracion_minutos</string>
+  <string name="prefrencia_factor">factor_sensibilidad</string>
+  <string name="prefrencia_minima">glucosa_minima</string>
+  <string name="prefrencia_maxima">glucosa_maxima</string>
+  <!--endregion-->
+
+  <!--region SPLASH SCREEN-->
+  <string name="title_activity_splash_screen">InsulinApp</string>
+  <!--endregion-->
+
+  <!--region INSULINA ACTUAL-->
+  <string name="insulina_actual">Insulina Actual</string>
+  <string name="texto_titulo_seccion_actual">Insulina Actual</string>
+  <string name="insulina_actual_aproximada">Cantidad insulina actual aproximada:</string>
+  <string name="sin_controles">Aún no te has hecho ningún control.</string>
+  <!--endregion-->
+
+  <!--region ACRA REPORTER-->
+  <string name="acra_toast">La aplicación está hecha mierda.</string>
+  <string name="acra_dialog_title">Ayúdame a mejorar</string>
+  <string name="acra_dialog_message">Cuéntame en qué pantalla estabas y qué estabas haciendo antes de que se produjera el error.</string>
+  <string name="acra_dialog_comment">Escribe aquí, putita:</string>
+  <string name="acra_dialog_confirm">Gracias, putita.</string>
+  <string name="de_acuerdo">De acuerdo</string>
+  <!--endregion-->
+
+  <!--region COPIA DE SEGURIDAD-->
+  <string name="sin_tarjeta_sd">Necesitas tener una tarjeta de memoria externa (SD) para almacenar una copia de seguridad. Inserta una y prueba de nuevo.</string>
+  <string name="advertencia_bd_ajustes_guardados">Se han guardado la base de datos y los ajustes.</string>
+  <string name="advertencia_bd_guardada">Se ha guardado la base de datos.</string>
+  <string name="advertencia_ajustes_guardados">Se han guardado los ajustes.</string>
+  <string name="advertencia_sin_guardar">No se ha guardado nada.</string>
+  <string name="copia_seguridad">Copia de seguridad</string>
+  <string name="eliminar_copia">Eliminar copia</string>
+  <string name="sin_copia_activado">Actualmente no tienes copia de seguridad.\nSe realizará una copia automáticamente todos los días a las %1$s, pero también puedes hacerla ahora mismo pulsando \"Guardar\".</string>
+  <string name="sin_copia_no_activado">Actualmente no tienes copia de seguridad.\nPuedes realizar una copia de seguridad ahora o activar la copia de seguridad automática desde la opción \"Copia de seguridad\" en el menú de ajustes.</string>
+  <string name="settings">Ajustes</string>
+  <string name="periods">Periodos</string>
+  <string name="records">Entradas</string>
+  <string name="food">Alimentos</string>
+  <string name="copia_seguridad_actual">Copia de seguridad actual</string>
+  <string name="borrar_alimentos">Borrar alimentos</string>
+  <string name="crear_alimento">Crear alimento</string>
+  <string name="problema_al_obtener_alimentos">Ha habido algún problema al obtener los alimentos. Inténtalo de nuevo.</string>
+  <string name="fecha">Fecha</string>
+  <string name="seleccionar_foto">Seleccionar foto</string>
+  <string name="tomar_foto">Tomar foto</string>
+  <string name="sin_internet_para_alimento">Conéctate a Internet para poder ver los alimentos del servidor</string>
+  <string name="imposible_obtener_alimentos_db">No se han podido obtener los alimentos de la base de datos.</string>
+  <string name="imposible_obtener_alimentos_server">No se han podido obtener los alimentos del servidor</string>
+  <string name="atras">Atrás</string>
+  <string name="guardar_entrada">Guardar entrada</string>
+  <string name="go_back">Volver</string>
+  <!--endregion-->
+
+</resources>

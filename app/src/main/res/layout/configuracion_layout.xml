@@ -1,0 +1,72 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".ui.activities.MenuFragment"
+  android:orientation="vertical">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/primary">
+
+    <TextView
+      android:id="@+id/tv_titulo_configuracion"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/texto_titulo_configuracion"
+      android:textSize="16sp"
+      android:textStyle="bold"
+      android:textColor="@color/blanco" />
+
+    <TextView
+      android:id="@+id/tv_mensaje_superior"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="12sp"
+      android:text="@string/texto_mensaje_superior_configuracion"
+      android:layout_gravity="start"
+      android:textColor="@color/primary_light"
+      android:layout_marginBottom="10dp" />
+
+  </LinearLayout>
+
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1">
+
+    <View
+      android:id="@+id/sombraSuperior"
+      android:layout_width="match_parent"
+      android:layout_height="3dp"
+      android:background="@drawable/selector_sombra_inferior" />
+
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="3dp"
+      android:background="@drawable/sombra_superior_selector"
+      android:layout_alignBottom="@+id/fragment" />
+
+    <FrameLayout
+      android:id="@id/fragment"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/deep"
+      android:layout_alignTop="@id/sombraSuperior" />
+
+  </RelativeLayout>
+
+  <Button
+    android:id="@+id/btn_volver"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Volver"
+    android:gravity="center"
+    android:textColor="@android:color/black"
+    android:background="@drawable/selector_simple"
+    android:layout_weight="0" />
+
+</LinearLayout>

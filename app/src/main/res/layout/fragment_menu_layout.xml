@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <variable
+      name="optionsAdapter"
+      type="julioverne.insulinapp.ui.adaptadores.OptionMenuAdapter" />
+
+    <variable
+      name="onItemClickedListener"
+      type="android.widget.AdapterView.OnItemClickListener" />
+
+  </data>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+      layout="@layout/cabecera_insulina_restante"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+
+    <ListView
+      android:id="@+id/lv_opcionesPrincipales"
+      adapter="@{optionsAdapter}"
+      onItemClick="@{onItemClickedListener}"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      tools:itemCount="5"
+      tools:listitem="@layout/item_opcion_simple_layout" />
+
+  </LinearLayout>
+
+</layout>

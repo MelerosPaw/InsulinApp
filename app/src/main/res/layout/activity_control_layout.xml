@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+    <variable
+      name="onNextClicked"
+      type="android.view.View.OnClickListener" />
+
+    <variable
+      name="onBackClicked"
+      type="android.view.View.OnClickListener" />
+
+  </data>
+
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include android:id="@+id/ll_insulinaActual"
+      layout="@layout/cabecera_insulina_restante"
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+
+    <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1">
+
+      <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+      <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_alignTop="@id/fragmentContainer"
+        android:background="@drawable/selector_sombra_inferior" />
+
+      <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_alignBottom="@id/fragmentContainer"
+        android:background="@drawable/sombra_superior_selector" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+      android:id="@+id/ll_botonesInferiores"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+
+      <Button
+        android:id="@+id/btn_atras"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/selector_simple"
+        android:onClick="@{onBackClicked::onClick}"
+        android:text="@string/boton_atras"
+        android:textColor="@color/primary_text"
+        app:fontFamily="@font/dejavu_bold" />
+
+      <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/divider" />
+
+      <Button
+        android:id="@+id/btn_siguiente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/selector_simple"
+        android:onClick="@{onNextClicked}"
+        android:text="@string/boton_siguiente"
+        android:textColor="@color/primary_text"
+        app:fontFamily="@font/dejavu_bold" />
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+</layout>

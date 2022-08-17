@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <julioverne.insulinapp.sharedpreferences.TimePreference
+    android:key="duracion_insulina"
+    android:title="Duración de la insulina rápida"
+    android:layout="@layout/item_preference"
+    android:dialogLayout="@layout/dialog_time_preference_layout"
+    android:maxLength="3"
+    android:summary="Duración de la insulina rápida."
+    android:dialogMessage="¿Cuál es la duración en horas de la insulina de absorción rápida?" />
+
+  <julioverne.insulinapp.sharedpreferences.ExtendedEditTextPreference
+    android:key="factor_sensibilidad"
+    android:title="Factor de sensibilidad a la insulina"
+    android:layout="@layout/item_preference"
+    android:dialogLayout="@layout/dialog_extended_editext_preference"
+    android:maxLength="3"
+    android:summary="El factor de sensibilidad para el paciente."
+    android:dialogMessage="Introduce el factor de sensibilidad a la insulina del paciente." />
+
+  <julioverne.insulinapp.sharedpreferences.ExtendedEditTextPreference
+    android:key="glucosa_minima"
+    android:title="Glucosa mínima"
+    android:layout="@layout/item_preference"
+    android:dialogLayout="@layout/dialog_extended_editext_preference"
+    android:maxLength="3"
+    android:summary="El mínimo de glucosa permitido."
+    android:dialogMessage="¿Cuál es la cantidad mínima de glucosa (en mg/dl) recomendable que el paciente debe tener?" />
+
+  <julioverne.insulinapp.sharedpreferences.ExtendedEditTextPreference
+    android:key="glucosa_maxima"
+    android:title="Glucosa máxima"
+    android:layout="@layout/item_preference"
+    android:dialogLayout="@layout/dialog_extended_editext_preference"
+    android:maxLength="3"
+    android:summary="El máximo de glucosa permitido."
+    android:dialogMessage="¿Cuál es la cantidad máxima de glucosa (en mg/dl) que el paciente no debe llegar a rebasar?" />
+
+  <julioverne.insulinapp.sharedpreferences.OrdinaryPreference
+    android:layout="@layout/item_preference"
+    android:title="Ratio de insulina"
+    android:summary="El ratio de insulina para cada periodo del día.">
+
+    <intent android:action="Periodos" />
+
+  </julioverne.insulinapp.sharedpreferences.OrdinaryPreference>
+
+
+  <julioverne.insulinapp.sharedpreferences.OrdinaryPreference
+    android:layout="@layout/item_preference"
+    android:title="Copia de seguridad"
+    android:summary="Ajustes de la copia de seguridad.">
+
+    <intent android:action="BackUp" />
+
+  </julioverne.insulinapp.sharedpreferences.OrdinaryPreference>
+
+
+</PreferenceScreen>

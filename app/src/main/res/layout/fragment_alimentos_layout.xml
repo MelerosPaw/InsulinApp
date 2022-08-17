@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+      android:id="@+id/tv_pregunta_comida"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:background="@android:color/transparent"
+      android:gravity="center"
+      android:paddingLeft="50dp"
+      android:paddingTop="10dp"
+      android:paddingRight="50dp"
+      android:text="@string/texto_vas_a_comer"
+      android:textAppearance="?android:attr/textAppearanceLarge"
+      android:textColor="@color/primary"
+      app:fontFamily="@font/dejavu_extra_light" />
+
+    <LinearLayout
+      android:id="@+id/ll_alimentos"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:background="@android:color/transparent"
+      android:orientation="vertical">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <AutoCompleteTextView
+          android:id="@+id/actv_nombre_alimento"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          app:fontFamily="@font/dejavu_extra_light"
+          android:background="@android:color/transparent"
+          android:hint="@string/texto_alimento"
+          android:inputType="text"
+          android:lines="1"
+          android:maxLines="1"
+          android:paddingLeft="5dp"
+          android:paddingRight="5dp"
+          android:text=""
+          android:textColor="@android:color/black" />
+
+        <ImageButton
+          android:id="@+id/ib_annadir"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_weight="0"
+          android:background="@drawable/selector_simple_boton_mas_alimentos"
+          android:padding="5dp"
+          android:src="@android:drawable/ic_input_add" />
+
+      </LinearLayout>
+
+      <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+          android:id="@+id/lv_alimentos"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/deep"
+          tools:listitem="@layout/item_alimento_control_layout" />
+
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="3dp"
+          android:layout_alignTop="@id/lv_alimentos"
+          android:background="@drawable/selector_sombra_inferior" />
+
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="3dp"
+          android:layout_alignBottom="@id/lv_alimentos"
+          android:background="@drawable/sombra_superior_selector" />
+
+
+      </RelativeLayout>
+
+    </LinearLayout>
+
+    <Switch
+      android:id="@+id/sw_postprandial"
+      android:layout_width="match_parent"
+      app:fontFamily="@font/dejavu_bold"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="10dp"
+      android:layout_marginBottom="10dp"
+      android:paddingLeft="5dp"
+      android:paddingRight="5dp"
+      android:text="@string/texto_despues_comer"
+      android:textOff="@string/boton_no"
+      android:textOn="@string/boton_si" />
+
+  </LinearLayout>
+</layout>

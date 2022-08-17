@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <variable
+      name="diaryEntry"
+      type="julioverne.insulinapp.data.dao.EntradaDAO" />
+
+    <import
+      alias="binding"
+      type="julioverne.insulinapp.ui.dialogs.DialogDetalleEntradaBindingsKt" />
+
+  </data>
+
+  <FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:paddingLeft="16dip"
+      android:paddingTop="16dip"
+      android:paddingRight="16dip">
+
+      <TextView
+        android:id="@+id/tv_titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@{binding.formatEntryTitle(diaryEntry)}"
+        android:textSize="20sp"
+        tools:text="Cosas de casa" />
+
+      <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical">
+
+          <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:gravity="center">
+
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/texto_titulo_glucosa_sangre"
+                android:textIsSelectable="false"
+                android:textSize="12sp" />
+
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/texto_dosis"
+                android:textIsSelectable="false"
+                android:textSize="12sp" />
+            </TableRow>
+
+            <TableRow
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:gravity="center">
+
+              <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                  android:id="@+id/tv_glucosa_sangre"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="@{diaryEntry.glucosaSangre.toString()}"
+                  android:textSize="18sp"
+                  android:textStyle="bold"
+                  tools:text="130" />
+
+                <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_alignBottom="@+id/tv_glucosa_sangre"
+                  android:layout_toEndOf="@+id/tv_glucosa_sangre"
+                  android:layout_toRightOf="@+id/tv_glucosa_sangre"
+                  android:text="@string/texto_mgdl"
+                  android:textSize="12sp"
+                  android:textStyle="bold" />
+
+              </RelativeLayout>
+
+              <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                  android:id="@+id/tv_insulina_dosis"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="@{diaryEntry.insulinaDosis.toString()}"
+                  android:textSize="18sp"
+                  android:textStyle="bold"
+                  tools:text="15" />
+
+                <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_alignBottom="@id/tv_insulina_dosis"
+                  android:layout_marginStart="5dp"
+                  android:layout_marginLeft="5dp"
+                  android:layout_toEndOf="@id/tv_insulina_dosis"
+                  android:layout_toRightOf="@id/tv_insulina_dosis"
+                  android:text="@string/texto_uds"
+                  android:textSize="12sp"
+                  android:textStyle="bold" />
+
+              </RelativeLayout>
+            </TableRow>
+
+            <TableRow
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_marginTop="16dp"
+              android:layout_weight="1"
+              android:gravity="center">
+
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/texto_antes_comer"
+                android:textIsSelectable="false"
+                android:textSize="12sp" />
+
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/texto_insulina_restante"
+                android:textIsSelectable="false"
+                android:textSize="12sp" />
+
+            </TableRow>
+
+            <TableRow
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:gravity="center">
+
+              <TextView
+                android:id="@+id/tv_antes_comer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@{diaryEntry.isAntesDeComer() ? @string/si : @string/no }"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="No" />
+
+              <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                  android:id="@+id/tv_insulina_sangre"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="@{diaryEntry.unidadesSangre.toString()}"
+                  android:textSize="18sp"
+                  android:textStyle="bold"
+                  tools:text="2" />
+
+                <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_alignBottom="@id/tv_insulina_sangre"
+                  android:layout_marginStart="5dp"
+                  android:layout_marginLeft="5dp"
+                  android:layout_toEndOf="@+id/tv_insulina_sangre"
+                  android:layout_toRightOf="@+id/tv_insulina_sangre"
+                  android:textSize="12sp"
+                  android:textStyle="bold"
+                  tools:text=" UDS." />
+
+              </RelativeLayout>
+
+            </TableRow>
+
+          </TableLayout>
+
+          <LinearLayout
+            visible="@{!diaryEntry.resumenAlimentos.isEmpty()}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp">
+
+            <TextView
+              android:id="@+id/tv_titulo_alimentos"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="5dp"
+              android:text="@string/texto_titulo_alimentos"
+              android:textSize="12sp" />
+
+            <TextView
+              android:id="@+id/tv_alimentos"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="10dp"
+              android:text="@{diaryEntry.resumenAlimentos}"
+              android:textSize="14sp"
+              android:textStyle="bold"
+              tools:text="- 2 Plátano\n- 4 Galleta\n- 2 Manzana" />
+
+          </LinearLayout>
+
+        </LinearLayout>
+
+      </ScrollView>
+
+      <Button
+        android:id="@+id/btn_cerrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|center_vertical"
+        android:background="@drawable/selector_simple"
+        android:text="@string/texto_cerrar"
+        android:textColor="@color/primary" />
+
+    </LinearLayout>
+
+  </FrameLayout>
+
+</layout>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <variable
+      name="foodAdapter"
+      type="julioverne.insulinapp.ui.adaptadores.AdaptadorAlimentos" />
+
+    <variable
+      name="searchListener"
+      type="android.text.TextWatcher" />
+
+    <variable
+      name="onDeleteFoodListener"
+      type="julioverne.insulinapp.ui.listeners.OnDeleteFoodListener" />
+
+    <variable
+      name="onSelectFoodListener"
+      type="julioverne.insulinapp.ui.listeners.OnSelectFoodListener" />
+
+    <variable
+      name="onCreateFoodClickedListener"
+      type="julioverne.insulinapp.ui.listeners.OnCreateFoodClicked" />
+
+  </data>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activities.FoodListFragment">
+
+    <include
+      layout="@layout/cabecera_insulina_restante"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+
+    <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <EditText
+          android:id="@+id/et_nombre_alimento"
+          textWatcher="@{searchListener}"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="10dp"
+          android:hint="@string/hint_buscar_alimento"
+          android:importantForAutofill="no"
+          android:inputType="text"
+          android:maxLines="1"
+          android:paddingHorizontal="20dp"
+          android:textColor="@android:color/black" />
+
+        <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+
+          <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_alimentos"
+            adapter="@{foodAdapter}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/deep"
+            android:scrollbarThumbVertical="@drawable/scrollbar"
+            android:scrollbars="vertical"
+            app:layoutManager="julioverne.insulinapp.widgets.ScrollControlLayoutManager"
+            tools:layoutManager="LinearLayoutManager"
+            tools:listitem="@layout/subitem_tarjeta" />
+
+          <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@drawable/selector_sombra_inferior" />
+
+          <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_alignBottom="@id/rv_alimentos"
+            android:background="@drawable/sombra_superior_selector" />
+
+          <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_crear_alimentos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="@dimen/fab_margin"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:onClick="@{onCreateFoodClickedListener}"
+            android:src="@android:drawable/ic_input_add"
+            app:fabSize="normal" />
+
+          <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_borrar_alimentos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="@dimen/fab_margin"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:onClick="@{() -> onDeleteFoodListener.mostrarDialogEliminacion(fabBorrarAlimentos.getContext(), foodAdapter.obtenerMarcadosParaEliminar())}"
+            android:src="@android:drawable/ic_menu_delete"
+            android:visibility="invisible"
+            app:backgroundTint="@color/rojo_borrar"
+            app:fabSize="normal"
+            tools:visibility="visible" />
+
+          <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_seleccionar_alimentos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="@dimen/fab_margin"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:onClick="@{() -> onSelectFoodListener.devolverAlimentos(foodAdapter.seleccionados)}"
+            android:src="@android:drawable/ic_menu_add"
+            android:visibility="invisible"
+            app:backgroundTint="@color/naranja_seleccion"
+            app:fabSize="normal"
+            tools:visibility="visible" />
+
+        </RelativeLayout>
+
+      </LinearLayout>
+
+      <FrameLayout
+        android:id="@+id/loading_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/blanco_intenso"
+        android:clickable="true"
+        android:visibility="invisible"
+        tools:visibility="gone">
+
+        <ProgressBar
+          android:layout_width="50dp"
+          android:layout_height="50dp"
+          android:layout_gravity="center"
+          android:indeterminate="true" />
+
+      </FrameLayout>
+
+    </FrameLayout>
+
+  </LinearLayout>
+
+</layout>

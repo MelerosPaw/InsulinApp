@@ -1,0 +1,54 @@
+<resources>
+
+  <style name="Basico" parent="Theme.AppCompat.Light.DarkActionBar">
+    <item name="colorPrimary">@color/primary</item>
+    <!--<item name="android:textColorPrimary">@android:color/black</item>-->
+  </style>
+
+  <style name="Alimentos" parent="Theme.AppCompat.Light">
+    <item name="colorPrimary">@drawable/degradado_alimentos_invertido_selector</item>
+    <item name="android:textColorPrimary">@android:color/black</item>
+    <item name="android:windowBackground">@drawable/degradado_alimentos_selector</item>
+  </style>
+
+  <!-- For some reason, using parent="Basico" won't keep the NoActionBar style -->
+  <style name="Basico.NoActionBar">
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+  </style>
+
+  <style name="basico.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+  <style name="basico.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+  <style name="BotonCopiaSeguridad" parent="Widget.AppCompat.Button.Borderless">
+    <item name="android:layout_width">0dp</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:minHeight">0dp</item>
+    <item name="android:minWidth">0dp</item>
+    <item name="android:layout_weight">1</item>
+    <item name="android:gravity">center_horizontal</item>
+    <item name="android:textSize">12sp</item>
+    <item name="android:paddingTop">10dp</item>
+    <item name="android:paddingBottom">10dp</item>
+    <item name="android:background">@drawable/selector_botones_copia</item>
+    <item name="android:textColor">@drawable/selector_texto_opciones_copia_seguridad</item>
+  </style>
+
+  <style name="EncabezadoTarjetaAlimentos">
+    <item name="android:textSize">12sp</item>
+    <item name="android:layout_marginBottom">-4dp</item>
+    <item name="android:textStyle">bold</item>
+    <item name="android:clickable">false</item>
+    <item name="android:focusable">false</item>
+    <item name="android:focusableInTouchMode">false</item>
+  </style>
+
+  <style name="ValoresTarjetaAlimentos">
+    <item name="android:layout_marginBottom">2dp</item>
+    <item name="android:textSize">14sp</item>
+    <item name="android:focusable">false</item>
+    <item name="android:focusableInTouchMode">false</item>
+  </style>
+
+</resources>

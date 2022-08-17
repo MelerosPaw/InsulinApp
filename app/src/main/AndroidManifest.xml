@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="julioverne.insulinapp">
+
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+  <application
+    android:name=".ui.InsulinApplication"
+    android:allowBackup="true"
+    android:icon="@mipmap/ic_launcher"
+    android:label="@string/app_name"
+    android:theme="@style/Basico">
+
+    <activity
+      android:name=".ui.activities.SplashScreen"
+      android:label="@string/title_activity_splash_screen"
+      android:theme="@style/Basico.NoActionBar">
+
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+
+    <activity
+      android:name=".ui.activities.NavigationActivity"
+      android:label="@string/app_name" />
+
+    <activity
+      android:name=".ui.activities.ConfiguracionActivity"
+      android:label="@string/texto_titulo_seccion_configuracion"
+      android:screenOrientation="portrait"
+      android:parentActivityName=".ui.activities.MenuFragment">
+
+      <meta-data
+        android:name="android.support.PARENT_ACTIVITY"
+        android:value=".ui.activities.MenuFragment" />
+
+    </activity>
+
+    <activity
+      android:name=".ui.activities.BackUpFragment"
+      android:label="@string/copia_seguridad"
+      android:screenOrientation="portrait"
+      android:parentActivityName=".ui.activities.MenuFragment">
+
+      <meta-data
+        android:name="android.support.PARENT_ACTIVITY"
+        android:value=".ui.activities.MenuFragment" />
+
+    </activity>
+
+    <activity
+      android:name=".ui.activities.PeriodosActivity"
+      android:label="@string/texto_titulo_seccion_periodos"
+      android:screenOrientation="portrait"
+      android:windowSoftInputMode="adjustPan"
+      android:parentActivityName=".ui.activities.ConfiguracionActivity">
+
+      <meta-data
+        android:name="android.support.PARENT_ACTIVITY"
+        android:value=".ui.activities.MenuFragment" />
+
+      <intent-filter>
+        <action android:name="Periodos" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+      </intent-filter>
+    </activity>
+
+    <activity
+      android:name=".ui.activities.AjustesCopiaSeguridadActivity"
+      android:label="@string/texto_titulo_seccion_ajustes_copia_seguridad"
+      android:screenOrientation="portrait"
+      android:windowSoftInputMode="adjustPan"
+      android:parentActivityName=".ui.activities.ConfiguracionActivity">
+
+      <meta-data
+        android:name="android.support.PARENT_ACTIVITY"
+        android:value=".ui.activities.MenuFragment" />
+
+      <intent-filter>
+        <action android:name="BackUp" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+      </intent-filter>
+    </activity>
+
+    <activity
+      android:name=".ui.activities.DiarioFragment"
+      android:label="@string/texto_titulo_seccion_diario"
+      android:parentActivityName=".ui.activities.MenuFragment">
+
+      <meta-data
+        android:name="android.support.PARENT_ACTIVITY"
+        android:value=".ui.activities.MenuFragment" />
+
+    </activity>
+
+    <activity
+      android:name=".ui.activities.ControlActivity"
+      android:label="@string/texto_titulo_seccion_control"
+      android:screenOrientation="portrait"
+      android:windowSoftInputMode="adjustPan"
+      android:parentActivityName=".ui.activities.MenuFragment">
+
+      <meta-data
+        android:name="android.support.PARENT_ACTIVITY"
+        android:value=".ui.activities.MenuFragment" />
+
+    </activity>
+
+    <activity
+      android:name=".ui.activities.InsulinaActualFragment"
+      android:label="@string/texto_titulo_seccion_actual"
+      android:screenOrientation="portrait"
+      android:windowSoftInputMode="adjustPan"
+      android:parentActivityName=".ui.activities.MenuFragment">
+
+      <meta-data
+        android:name="android.support.PARENT_ACTIVITY"
+        android:value=".ui.activities.MenuFragment" />
+
+    </activity>
+
+    <receiver android:name=".ui.receiver.BackupReceiver">
+      <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED" />
+      </intent-filter>
+    </receiver>
+
+    <receiver android:name=".ui.receiver.CalculoInsulinaReceiver" />
+
+    <service android:name=".services.InsulinaRestanteService" />
+    <service android:name=".services.ActualizarAlimentosService" />
+
+  </application>
+
+</manifest>
